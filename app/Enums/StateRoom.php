@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum StateRoom: string {
+enum StateRoom: string
+{
     case Free = 'Libre';
     case Reserved = 'Reservada';
     case Occupied = 'Ocupada';
