@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusRequest;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->time('start_date');
             $table->time('end_date');
             $table->timestamps();
-            $table->enum('status', ["approved", "pending", "rejected"]);
+            $table->enum('status', [ StatusRequest::Approved->value, StatusRequest::Pending->value, StatusRequest::Rejected->value])->default(StatusRequest::Pending->value);
             $table->string('user_id')->unsigned();
             $table->string('room_id')->unsigned();
             $table->foreign("user_id")
