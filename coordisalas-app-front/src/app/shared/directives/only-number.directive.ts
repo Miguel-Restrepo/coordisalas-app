@@ -5,15 +5,15 @@ export class OnlyNumberDirective {
   protected regex: RegExp = new RegExp(/^\d*$/g);
   protected specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
 
-  @Input() allowedOnlyNumbers: boolean;
+  //@Input() allowedOnlyNumbers: boolean;
 
   constructor(protected el: ElementRef) { }
 
   @HostListener('keypress', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     if (
-      this.specialKeys.indexOf(event.key) !== -1 ||
-      !this.allowedOnlyNumbers
+      this.specialKeys.indexOf(event.key) !== -1 
+      //|| !this.allowedOnlyNumbers
     ) {
       return;
     }

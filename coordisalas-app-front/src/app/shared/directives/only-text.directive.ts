@@ -2,18 +2,18 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({ selector: '[onlyText]' })
 export class OnlyTextDirective {
-  protected regex: RegExp = new RegExp(/^\d*$/g);
+  protected regex: RegExp = new RegExp(/^[a-zA-ZÁáÉéÍíÓóÚúÜü ]+$/);
   protected specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
 
-  @Input() allowedOnlyText: boolean;
+  //@Input() allowedOnlyText: boolean;
 
   constructor(protected el: ElementRef) { }
 
   @HostListener('keypress', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     if (
-      this.specialKeys.indexOf(event.key) !== -1 ||
-      !this.allowedOnlyText
+      this.specialKeys.indexOf(event.key) !== -1 
+      //|| !this.allowedOnlyText
     ) {
       return;
     }
