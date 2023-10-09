@@ -1,4 +1,4 @@
 export class LoginCredentials {
-  user?: string;
+  document?: string;
   password?: string
 }

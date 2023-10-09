@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TimeBussyController;
 use App\Http\Controllers\UserController;
@@ -17,6 +18,16 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+  // Rutas protegidas
+});
+
 
 Route::controller(RoomController::class)->group(function () {
     Route::get('room', 'index');
@@ -48,4 +59,8 @@ Route::controller(UserController::class)->group(function () {
     Route::post('user', 'store');
     Route::put('user/{id}', 'update');
     Route::delete('user/{id}/delete', 'destroy');
+});
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+  return $request->user();
 });

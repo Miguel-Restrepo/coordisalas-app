@@ -1,4 +1,6 @@
+import { User } from './user.model';
+
 export class AutenticationUser {
-  user?: string;
-  password?: string
+  user?: User;
+  token?: string
 }

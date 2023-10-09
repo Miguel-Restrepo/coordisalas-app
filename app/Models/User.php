@@ -12,7 +12,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-
     protected $table= "users";
     protected $primaryKey = 'document';
     public $timestamps = true;
@@ -51,4 +50,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+  protected $username = 'document'; 
+
+  public function generateToken()
+  {
+      return $this->createToken('auth-token')->plainTextToken;
+  }
+
 }

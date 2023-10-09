@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AutenticationUser, LoginCredentials } from 'src/app/models';
+import { SecurityService } from 'src/app/services';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,9 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private securityService: SecurityService
+  ) {
 
   }
 
@@ -29,9 +32,9 @@ export class LoginComponent {
   protected initForm() {
     this.loginForm = this.fb.group({
       user: ['', [
-        Validators.required, 
+        Validators.required,
         Validators.minLength(8),
-        Validators.maxLength(12), 
+        Validators.maxLength(12),
         Validators.pattern(/^\d+$/)
       ]],
       password: [
@@ -45,7 +48,7 @@ export class LoginComponent {
     });
   }
 
-  public fieldValid(fieldName: string){
+  public fieldValid(fieldName: string) {
     return (this.loginForm.get(fieldName)?.invalid && (this.loginForm.get(fieldName)?.dirty || this.loginForm.get(fieldName)?.touched));
   }
 
@@ -54,21 +57,29 @@ export class LoginComponent {
       alert('Formulario Invalido');
     } else {
       let credentials = this.getLoginCredentials();
-     /* this.service.ingresoUsuarios(credentials).subscribe((data) => {
-        alert('Bienvenido');
-        let res = this.service.guardarSesion(data);
-        this.router.navigate(["/inicio"]);
-      }, err => {
-        alert('Usuario o contraseña NO validos');
-      }
-      );*/
-      console.log(credentials);
-    }
+      this.securityService.login(credentials).subscribe(
+        (data) => {
+          console.log('Inicio de sesión exitoso', data);
+          this.router.navigate(["/inicio"]);
+        },
+          (error) => {
+            console.error('Error en el inicio de sesión', error);
+          }
+      )}
+      /* this.service.ingresoUsuarios(credentials).subscribe((data) => {
+         alert('Bienvenido');
+         let res = this.service.guardarSesion(data);
+         this.router.navigate(["/inicio"]);
+       }, err => {
+         alert('Usuario o contraseña NO validos');
+       }
+       );*/
+    
   }
 
   private getLoginCredentials(): LoginCredentials {
     return {
-      user: this.loginForm.get('user')?.value,
+      document: this.loginForm.get('user')?.value,
       password: this.loginForm.get('password')?.value
     } as LoginCredentials;
   }
