@@ -1,21 +1,84 @@
-<header class="bg-blue-800 py-4 text-white">
-  <div class="container mx-auto flex items-center justify-between px-4">
-    <div class="flex items-center">
-      <img src="../../../../../assets/images/logo.png" alt="Logo" class="w-16">
-      <span class="ml-2 text-xl font-semibold text-shadow-lg">Universidad de Caldas</span>
+<header>
+  <!-- Línea azul claro en la parte superior -->
+  <div class="bg-blue-100 border-b border-blue-300 py-2">
+    <div class="container mx-auto flex items-center justify-between">
+      <!-- Logo y hora/fecha -->
+      <div class="flex items-center">
+        <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div>
+          <p class="text-sm font-bold">{{ date }}</p>
+        </div>
+      </div>
+      <!-- Bienvenido y menú -->
+      <div class="flex items-center">
+        <p class="text-sm mr-2">Bienvenido(a): Leidy Viviana </p>
+        <button class="bg-blue-100 p-1 rounded-full">
+          <svg class="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+        </button>
+      </div>
     </div>
-
-    <nav class="hidden lg:flex space-x-4">
-      <a href="#" class="hover:underline">Inicio</a>
-      <a href="#" class="hover:underline">Acerca de</a>
-      <a href="#" class="hover:underline">Programas</a>
-      <a href="#" class="hover:underline">Contacto</a>
-    </nav>
-
-    <button class="lg:hidden">
-      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-      </svg>
-    </button>
   </div>
+  <!-- Fondo blanco con imagen y texto -->
+  <div class="bg-white py-4">
+    <div class="container mx-auto flex items-center justify-between">
+      <!-- Imagen a la izquierda -->
+      <img src="../../../../../assets/images/facultad_ingenierias.png.jpg" alt="Imagen" style="height: 5.9rem;">
+      <!-- Texto a la derecha -->
+      <div>
+        <p class="text-4xl line-height-10">CoordiSalasUC</p>
+        <div class="text-blue-700 flex">
+          <p class="font-bold mr-2">Linea</p> 
+          <span class="mr-2">Coordisalas</span> 
+          <p class="font-bold">(606) 3103653454</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-blue-600 text-white py-2">
+    <div class="container mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-4 flex-1">
+        <button class="text-sm flex-1">Inicio</button>
+        <div class="border-l border-white h-6"></div>
+        <div class="relative group flex-1">
+          <button class="text-sm group-hover:bg-blue-700">Usuarios</button>
+          <div class="hidden absolute right-0 mt-2 space-y-2 bg-white text-black text-sm p-2 group-hover:block">
+            <a href="#">Opción 1</a>
+            <a href="#">Opción 2</a>
+          </div>
+        </div>
+        <div class="border-l border-white h-6"></div>
+        <div class="relative group flex-1">
+          <button class="text-sm group-hover:bg-blue-700">Aulas</button>
+          <div class="hidden absolute right-0 mt-2 space-y-2 bg-white text-black text-sm p-2 group-hover:block">
+            <a href="#">Opción 1</a>
+            <a href="#">Opción 2</a>
+          </div>
+        </div>
+        <div class="border-l border-white h-6"></div>
+        <div class="relative group flex-1">
+          <button class="text-sm group-hover:bg-blue-700">Horarios</button>
+          <div class="hidden absolute right-0 mt-2 space-y-2 bg-white text-black text-sm p-2 group-hover:block">
+            <a href="#">Opción 1</a>
+            <a href="#">Opción 2</a>
+          </div>
+        </div>
+        <div class="border-l border-white h-6"></div>
+        <div class="relative group flex-1">
+          <button class="text-sm group-hover:bg-blue-700">Reservas</button>
+          <div class="hidden absolute right-0 mt-2 space-y-2 bg-white text-black text-sm p-2 group-hover:block">
+            <a href="#">Opción 1</a>
+            <a href="#">Opción 2</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </header>
