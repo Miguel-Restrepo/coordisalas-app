@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from 'src/app/models';
 import { SessionStorageService } from 'src/app/services';
 
 @Component({
@@ -7,10 +8,22 @@ import { SessionStorageService } from 'src/app/services';
 })
 export class HeaderComponent {
   date: string = '';
+  public _login = false;
+  set login(value: boolean) {
+    this._login = value
+    if(value){
+      this.setData()
+    }
+  }
+
+  get login() {
+    return this._login;
+  }
+  public name: string = '';
 
   constructor(
     private sessionStorage: SessionStorageService
-  ){
+  ) {
 
   }
 
@@ -23,8 +36,14 @@ export class HeaderComponent {
     const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     const day = days[today.getDay()];
     this.date = `${day} ${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
-    if (this.sessionStorage.getItem('token')) {
+    this.sessionStorage.storageSubject.subscribe((data: string) => {
+      this.login = !!data;
+    });
+    this.login = !!this.sessionStorage.getItem('token');
+  }
 
-    }
+  setData() {
+    let user = this.sessionStorage.getItem('usuario')
+    this.name = user.name;
   }
 }

@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AutenticationUser } from 'src/app/models';
+import { AutenticationUser, User } from 'src/app/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionStorageService {
-  private storageSubject: BehaviorSubject<AutenticationUser> = new BehaviorSubject<AutenticationUser>({
-
-  });
+  public storageSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor() {
    }
   
 
-  watchStorageChanges(): Observable<AutenticationUser> {
+  watchStorageChanges(): Observable<string> {
     return this.storageSubject.asObservable();
   }
 
   setItem(key: string, value: any): void {
     sessionStorage.setItem(key, JSON.stringify(value));
-    if (key === 'user') {
+    if (key === 'token') {
       this.storageSubject.next(value);
     }
   }
@@ -36,6 +34,6 @@ export class SessionStorageService {
 
   clear(): void {
     sessionStorage.clear();
-    this.storageSubject.next({});
+    this.storageSubject.next('');
   }
 }

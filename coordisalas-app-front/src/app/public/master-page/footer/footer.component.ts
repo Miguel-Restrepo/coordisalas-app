@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AutenticationUser, User } from 'src/app/models';
 import { SessionStorageService } from 'src/app/services';
 
 @Component({
@@ -18,6 +19,9 @@ export class FooterComponent {
   }
 
   internalInit() {
-    this.login = !!this.sessionStorage.getItem('token');
+    this.sessionStorage.storageSubject.subscribe((data: string) => {
+      this.login = !!data;
+    });
+    this.login = !!this.sessionStorage.getItem('token'); 
   }
 }

@@ -14,21 +14,21 @@ export class AuthenticationGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (route?.routeConfig?.path === 'inicio-sesion') {
-        if (this.sessionStorage.getItem('token')) {
-          this.router.navigate(['/inicio']);
-          return false;
-        } else {
-          return true;
-        }
+    if (route?.routeConfig?.path === 'inicio-sesion') {
+      if (this.sessionStorage.getItem('token')) {
+        this.router.navigate(['/inicio']);
+        return false;
       } else {
-        if (this.sessionStorage.getItem('token')) {
-          return true;
-        } else {
-          this.router.navigate(['/iniciar-sesion']);
-          return false;
-        }
+        return true;
       }
+    } else {
+      if (this.sessionStorage.getItem('token')) {
+        return true;
+      } else {
+        this.router.navigate(['/iniciar-sesion']);
+        return false;
+      }
+    }
   }
-  
+
 }
