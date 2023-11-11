@@ -45,38 +45,22 @@
     <div class="bg-blue-600 text-white py-2">
       <div class="container mx-auto flex items-center justify-between">
         <div class="flex items-center space-x-4 flex-1">
-          <button class="text-sm flex-1">Inicio</button>
+          <button class="text-sm flex-1"  [routerLink]="'/inicio'">Inicio</button>
           <div class="border-l border-white h-6"></div>
-          <div class="relative group flex-1">
-            <button class="text-sm group-hover:bg-blue-700">Usuarios</button>
-            <div class="hidden absolute right-0 mt-2 space-y-2 bg-white text-black text-sm p-2 group-hover:block">
-              <a href="#">Opción 1</a>
-              <a href="#">Opción 2</a>
-            </div>
+          <div class="relative group flex-1" [routerLink]="'/usuarios'">
+            <button class="text-sm group-hover:bg-blue-700" >Usuarios</button>
           </div>
           <div class="border-l border-white h-6"></div>
-          <div class="relative group flex-1">
-            <button class="text-sm group-hover:bg-blue-700">Aulas</button>
-            <div class="hidden absolute right-0 mt-2 space-y-2 bg-white text-black text-sm p-2 group-hover:block">
-              <a href="#">Opción 1</a>
-              <a href="#">Opción 2</a>
-            </div>
+          <div class="relative group flex-1" [routerLink]="'/salas'">
+            <button class="text-sm group-hover:bg-blue-700" >Aulas</button>
           </div>
           <div class="border-l border-white h-6"></div>
-          <div class="relative group flex-1">
-            <button class="text-sm group-hover:bg-blue-700">Horarios</button>
-            <div class="hidden absolute right-0 mt-2 space-y-2 bg-white text-black text-sm p-2 group-hover:block">
-              <a href="#">Opción 1</a>
-              <a href="#">Opción 2</a>
-            </div>
+          <div class="relative group flex-1" [routerLink]="'/inicio'">
+            <button class="text-sm group-hover:bg-blue-700" >Horarios</button>
           </div>
           <div class="border-l border-white h-6"></div>
-          <div class="relative group flex-1">
-            <button class="text-sm group-hover:bg-blue-700">Reservas</button>
-            <div class="hidden absolute right-0 mt-2 space-y-2 bg-white text-black text-sm p-2 group-hover:block">
-              <a href="#">Opción 1</a>
-              <a href="#">Opción 2</a>
-            </div>
+          <div class="relative group flex-1" [routerLink]="'/reservas'">
+            <button class="text-sm group-hover:bg-blue-700" >Reservas</button>
           </div>
         </div>
       </div>

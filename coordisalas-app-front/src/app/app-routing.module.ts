@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RoomListComponent } from './modules/room/components/room-list/room-list.component';
 import { LoginComponent } from './modules/security/login/login.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { TimeBussyComponent } from './modules/calendar/time-bussy/time-bussy.component';
 
 const routes: Routes = [
   {
@@ -11,13 +12,13 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard]
   },
   {
-    path: 'room', 
+    path: 'salas', 
     component: RoomListComponent,
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'inicio', 
-    component: RoomListComponent,
+    component: TimeBussyComponent,
     canActivate: [AuthenticationGuard]
   },
   {
