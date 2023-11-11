@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SessionStorageService } from 'src/app/services';
 
 @Component({
   selector: 'app-header',
@@ -6,15 +7,24 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   date: string = '';
-  
-  ngOnInit(){
+
+  constructor(
+    private sessionStorage: SessionStorageService
+  ){
+
+  }
+
+  ngOnInit() {
     this.internalInit();
   }
 
-  internalInit(){
+  internalInit() {
     const today = new Date();
     const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     const day = days[today.getDay()];
     this.date = `${day} ${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+    if (this.sessionStorage.getItem('token')) {
+
+    }
   }
 }
