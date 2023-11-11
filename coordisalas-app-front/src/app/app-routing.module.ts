@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RoomListComponent } from './modules/room/components/room-list/room-list.component';
+import { LoginComponent } from './modules/security/login/login.component';
 
-const routes: Routes = [{ path: 'room', component: RoomListComponent }
+const routes: Routes = [
   {
     path: 'inicio-sesion',
     component: LoginComponent,
@@ -11,13 +13,14 @@ const routes: Routes = [{ path: 'room', component: RoomListComponent }
     pathMatch: 'full',
     redirectTo: '/inicio',
   },
-  { path: 'login', redirectTo: '/i', },
+  { path: 'login', redirectTo: '/i' },
   {
     path: '',
     pathMatch: 'full',
     redirectTo: '/inicio',
-  //  canActivate: [AuthGuard]
+    //  canActivate: [AuthGuard]
   },
+  { path: 'room', component: RoomListComponent },
   {
     path: '**',
     redirectTo: '/pagina-no-encontrada',
