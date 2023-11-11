@@ -13,6 +13,6 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     LoginComponent
-  ]
+  ],
 })
 export class SecurityModule { }

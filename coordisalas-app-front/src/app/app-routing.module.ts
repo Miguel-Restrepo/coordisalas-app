@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards';
 import { RoomListComponent } from './modules/room/components/room-list/room-list.component';
 import { LoginComponent } from './modules/security/login/login.component';
 
@@ -9,21 +10,18 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: '/inicio',
+    path: 'room', 
+    component: RoomListComponent,
+   // canActivate: [AuthGuard]
   },
-  { path: 'login', redirectTo: '/i' },
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: '/inicio',
-    //  canActivate: [AuthGuard]
+    path: 'inicio', 
+    component: RoomListComponent,
+    //canActivate: [AuthGuard]
   },
-  { path: 'room', component: RoomListComponent },
   {
     path: '**',
-    redirectTo: '/pagina-no-encontrada',
+    redirectTo: '/inicio',
   },
 ];
 
@@ -31,4 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

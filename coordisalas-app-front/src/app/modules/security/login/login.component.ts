@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, Injectable } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AutenticationUser, LoginCredentials } from 'src/app/models';
-import { SecurityService } from 'src/app/services';
+import { LoginCredentials } from 'src/app/models';
+import { SecurityService, SessionStorageService } from 'src/app/services';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private securityService: SecurityService
+    private securityService: SecurityService,
+    private sessionStorage: SessionStorageService
   ) {
 
   }
@@ -59,21 +60,14 @@ export class LoginComponent {
       let credentials = this.getLoginCredentials();
       this.securityService.login(credentials).subscribe(
         (data) => {
-          console.log('Inicio de sesión exitoso', data);
+          this.sessionStorage.setItem('usuario', data.user);
+          this.sessionStorage.setItem('token', data.token);
           this.router.navigate(["/inicio"]);
         },
           (error) => {
             console.error('Error en el inicio de sesión', error);
           }
       )}
-      /* this.service.ingresoUsuarios(credentials).subscribe((data) => {
-         alert('Bienvenido');
-         let res = this.service.guardarSesion(data);
-         this.router.navigate(["/inicio"]);
-       }, err => {
-         alert('Usuario o contraseña NO validos');
-       }
-       );*/
     
   }
 
