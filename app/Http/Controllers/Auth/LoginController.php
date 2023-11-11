@@ -18,14 +18,16 @@ class LoginController extends Controller
       'password' => 'required|string',
     ]);
 
-    if (Auth::attempt(['document' => $request->document, 'password' => $request->password])) {
-      $user = new User();
+    $user = User::where('document', $request->document)->first();
+
+    if ($user && password_verify($request->password, $user->password)) {
+      unset($user->password);
       $token = $user->generateToken();
 
       return response()->json(['token' => $token, 'user' => $user], 200);
+    } else {
+      return response()->json(['message' => 'Credenciales incorrectas'], 401);
     }
-
-    return response()->json(['message' => 'Credenciales incorrectas'], 401);
   }
 
 
