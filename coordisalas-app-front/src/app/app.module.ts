@@ -7,21 +7,21 @@ import { SecurityModule } from './modules/security/security.module';
 import { FooterComponent } from './public/master-page/footer/footer.component';
 import { HeaderComponent } from './public/master-page/header/header.component';
 import { SharedModule } from './shared/shared.module';
+import { RoomModule } from './modules/room/room.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent
-  ],
+  declarations: [AppComponent, HeaderComponent, FooterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
     SecurityModule,
-    HttpClientModule
+    RoomModule,
+    HttpClientModule,
+    NgbModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

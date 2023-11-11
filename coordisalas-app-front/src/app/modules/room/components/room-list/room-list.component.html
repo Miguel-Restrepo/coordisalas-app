@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <h2>Lista de aulas</h2>
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search"
+      [(ngModel)]="searchTerm"
+      (input)="applyFilter()"
+    />
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let room of filteredRooms
+            | slice : (currentPage - 1) * pageSize : currentPage * pageSize
+        "
+      >
+        <td>{{ room.name }}</td>
+        <td>
+          <button class="btn btn-warning">Editar</button>
+          <button class="btn btn-danger">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ngb-pagination
+    [collectionSize]="filteredRooms.length"
+    [(page)]="currentPage"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)"
+    aria-label="Default pagination"
+  ></ngb-pagination>
+</div>
