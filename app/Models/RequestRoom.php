@@ -32,4 +32,14 @@ class RequestRoom extends Model
         'start_date' => 'datetime:H:i:s',
         'end_date' => 'datetime:H:i:s'
     ];
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class, 'room_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

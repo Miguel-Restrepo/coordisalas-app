@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TimeBussyController;
 use App\Http\Controllers\UserController;
@@ -37,8 +38,11 @@ Route::controller(RoomController::class)->group(function () {
     Route::delete('room/{id}/delete', 'destroy');
 });
 
-Route::controller(RequestRoom::class)->group(function () {
+Route::controller(RequestController::class)->group(function () {
     Route::get('request-room', 'index');
+    Route::get('request-room/approve', 'approve');
+    Route::get('request-room/rejected', 'rejected');
+    Route::get('request-room/pending', 'pending');
     Route::get('request-room/{id}', 'show');
     Route::post('request-room', 'store');
     Route::put('request-room/{id}', 'update');
