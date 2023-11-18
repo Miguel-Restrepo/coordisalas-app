@@ -102,6 +102,6 @@ class RequestController extends Controller
   {
     $objeto = RequestRoom::find($id);
     $objeto->delete();
-    return "OK";
+    return $objeto;
   }
 }
