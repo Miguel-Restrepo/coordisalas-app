@@ -41,6 +41,8 @@ Route::controller(RoomController::class)->group(function () {
 Route::controller(RequestController::class)->group(function () {
     Route::get('request-room', 'index');
     Route::get('request-room/approve', 'approve');
+    Route::get('request-room/approve/user/{user_id}', 'filterByUser');
+    Route::get('request-room/approve/room/{room_id}', 'filterByRoom');
     Route::get('request-room/rejected', 'rejected');
     Route::get('request-room/pending', 'pending');
     Route::get('request-room/{id}', 'show');

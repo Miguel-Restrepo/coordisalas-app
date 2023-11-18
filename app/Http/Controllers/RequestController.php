@@ -30,6 +30,35 @@ class RequestController extends Controller
     return $transformedRooms;
   }
 
+  public function filterByUser($user_id)
+  {
+    $rooms = RequestRoom::with('room', 'users')->where('status', StatusRequest::Approved->value)->where('user_id', $user_id)->get();
+    $transformedRooms = $rooms->map(function ($room) {
+      return [
+        'id' => $room->id,
+        'title' => $room->users->name . " " . $room->room->name,
+        'start' => $room->start_date,
+        'end' => $room->end_date,
+      ];
+    });
+    return $transformedRooms;
+  }
+
+  public function filterByRoom($room_id)
+  {
+    $room_id = str_replace('_', ' ', $room_id);
+    $rooms = RequestRoom::with('room', 'users')->where('status', StatusRequest::Approved->value)->where('room_id', $room_id)->get();
+    $transformedRooms = $rooms->map(function ($room) {
+      return [
+        'id' => $room->id,
+        'title' => $room->users->name . " " . $room->room->name,
+        'start' => $room->start_date,
+        'end' => $room->end_date,
+      ];
+    });
+    return $transformedRooms;
+  }
+
   // Get all rejected
   public function rejected()
   {
