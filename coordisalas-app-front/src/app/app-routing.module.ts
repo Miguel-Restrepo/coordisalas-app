@@ -3,27 +3,32 @@ import { RouterModule, Routes } from '@angular/router';
 import { RoomListComponent } from './modules/room/components/room-list/room-list.component';
 import { LoginComponent } from './modules/security/login/login.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
-import { TimeBussyComponent } from './modules/calendar/time-bussy/time-bussy.component';
+import { CalendarComponent } from './modules/calendar/calendar/calendar.component';
 
 const routes: Routes = [
   {
     path: 'inicio-sesion',
     component: LoginComponent,
-    canActivate: [AuthenticationGuard]
+    canActivate: [AuthenticationGuard],
   },
   {
-    path: 'salas', 
+    path: 'salas',
     component: RoomListComponent,
-    canActivate: [AuthenticationGuard]
+    canActivate: [AuthenticationGuard],
   },
   {
-    path: 'inicio', 
-    component: TimeBussyComponent,
-    canActivate: [AuthenticationGuard]
+    path: 'calendario',
+    component: CalendarComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'inicio',
+    component: CalendarComponent,
+    canActivate: [AuthenticationGuard],
   },
   {
     path: '**',
-    redirectTo: '/inicio-sesion', 
+    redirectTo: '/inicio-sesion',
   },
 ];
 
@@ -31,4 +36,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

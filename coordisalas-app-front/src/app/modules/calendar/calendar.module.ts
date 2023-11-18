@@ -1,19 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TimeBussyComponent } from './calendar/time-bussy/time-bussy.component';
-import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CalendarComponent } from './calendar/calendar.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
-  declarations: [
-    TimeBussyComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
-  exports:[
-    TimeBussyComponent
-  ]
+  declarations: [CalendarComponent],
+  imports: [CommonModule, FormsModule, NgbModule, FullCalendarModule],
 })
+export class CalendarModule {}

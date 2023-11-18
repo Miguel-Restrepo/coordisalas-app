@@ -1,14 +1,7 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Room } from 'src/app/models';
 import { RoomService } from 'src/app/services';
-import { AsyncPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
-import { Observable } from 'rxjs';
-import { FormsModule } from '@angular/forms';
-import {
-  NgbPaginationModule,
-  NgbTypeaheadModule,
-} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-room-list',
