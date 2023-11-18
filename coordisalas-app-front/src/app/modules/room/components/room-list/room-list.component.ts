@@ -9,11 +9,13 @@ import {
   NgbPaginationModule,
   NgbTypeaheadModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { EditRoomComponent } from '../edit-room/edit-room.component';
+import { DeleteRoomComponent } from '../delete-room/delete-room.component';
+import { CreateRoomComponent } from '../create-room/create-room.component';
 
 @Component({
   selector: 'app-room-list',
-  templateUrl: './room-list.component.html',
-  styleUrls: ['./room-list.component.css'],
+  templateUrl: './templates/room-list.component.html',
 })
 export class RoomListComponent implements OnInit {
   rooms: Room[] = [];
@@ -25,10 +27,17 @@ export class RoomListComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.internatInit();
+  }
+
+  internatInit() {
     this.getRooms();
+    this.roomService.roomSubject.subscribe((data: boolean) => {
+      this.getRooms();
+    });
   }
 
   getRooms() {
@@ -43,10 +52,6 @@ export class RoomListComponent implements OnInit {
     );
   }
 
-  open(content: any) {
-    this.modalService.open(content);
-  }
-
   onPageChange(page: number) {
     this.currentPage = page;
   }
@@ -55,5 +60,19 @@ export class RoomListComponent implements OnInit {
     this.filteredRooms = this.rooms.filter((room) =>
       room.name?.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+  }
+
+  create() {
+    this.modalService.open(CreateRoomComponent, { size: 'lg' });
+  }
+
+  edit(room: Room) {
+    const modalRef = this.modalService.open(EditRoomComponent);
+    modalRef.componentInstance.room = room;
+  }
+
+  delete(id: any) {
+    const modalRef = this.modalService.open(DeleteRoomComponent);
+    modalRef.componentInstance.id = id;
   }
 }

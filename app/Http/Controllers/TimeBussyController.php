@@ -42,6 +42,6 @@ class TimeBussyController extends Controller
     {
         $objeto = TimeBussy::find($id);
         $objeto->delete();
-        return "OK";
+        return $objeto;
     }
 }

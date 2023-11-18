@@ -9,6 +9,7 @@
       (input)="applyFilter()"
     />
   </div>
+  <button class="btn btn-success" (click)="create()">Crear</button>
   <table class="table">
     <thead>
       <tr>
@@ -24,8 +25,8 @@
       >
         <td>{{ room.name }}</td>
         <td>
-          <button class="btn btn-warning">Editar</button>
-          <button class="btn btn-danger">Eliminar</button>
+          <button class="btn btn-warning" (click)="edit(room)">Editar</button>
+          <button class="btn btn-danger"(click)="delete(room.name)">Eliminar</button>
         </td>
       </tr>
     </tbody>

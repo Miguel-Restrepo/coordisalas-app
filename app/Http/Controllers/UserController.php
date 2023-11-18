@@ -42,6 +42,6 @@ class UserController extends Controller
     {
         $objeto = User::find($id);
         $objeto->delete();
-        return "OK";
+        return $objeto;
     }
 }
