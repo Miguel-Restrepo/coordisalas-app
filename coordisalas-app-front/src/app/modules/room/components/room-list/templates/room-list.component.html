@@ -1,19 +1,22 @@
-<div class="container mt-4">
-  <h2>Lista de aulas</h2>
-  <div class="input-group mb-3">
+<div class="container mx-auto my-4 flex flex-col items-center">
+  <h2 class="text-2xl dark:text-white">Lista de aulas</h2>
+  <div class="flex mb-3 w-9/12">
     <input
       type="text"
-      class="form-control"
-      placeholder="Search"
+      class="form-control mr-2"
+      placeholder="Buscar"
       [(ngModel)]="searchTerm"
       (input)="applyFilter()"
     />
+    <button class="btn btn-success" (click)="create()">Crear</button>
   </div>
-  <button class="btn btn-success" (click)="create()">Crear</button>
-  <table class="table">
+  <table class="table table-bordered table-fixed w-9/12">
     <thead>
       <tr>
         <th>Nombre</th>
+        <th>
+          <button class="btn btn-success" (click)="create()">Crear</button>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -25,8 +28,12 @@
       >
         <td>{{ room.name }}</td>
         <td>
-          <button class="btn btn-warning" (click)="edit(room)">Editar</button>
-          <button class="btn btn-danger"(click)="delete(room.name)">Eliminar</button>
+          <button class="btn btn-warning m-1" (click)="edit(room)">
+            Editar
+          </button>
+          <button class="btn btn-danger m-1" (click)="delete(room.name)">
+            Eliminar
+          </button>
         </td>
       </tr>
     </tbody>

@@ -21,6 +21,8 @@ import { ServiceConfig } from 'src/app/config';
 })
 export class CalendarComponent implements OnInit {
   selectedFilterType: string = 'room';
+  selectedRoom: string = '';
+  selectedUser: string = '';
   calendarVisible = true;
   url: string = `${ServiceConfig.API_URL}request-room/approve/room/Sala_A`;
   calendarOptions: CalendarOptions = {
@@ -32,7 +34,7 @@ export class CalendarComponent implements OnInit {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
     },
     initialView: 'dayGridMonth',
-    //initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
     selectable: true,
