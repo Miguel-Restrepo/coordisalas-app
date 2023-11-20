@@ -6,8 +6,52 @@
 .fc .fc-toolbar.fc-header-toolbar {
   margin-bottom: 1.5em;
   position: sticky;
-  top: 12vh !important;
+  top: 25vh !important;
   z-index: 10;
   background: white;
   padding: 0.25rem;
+}
+
+/* Default styles for larger screens */
+.fc-header-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fc-toolbar-chunk {
+  display: flex;
+  align-items: center;
+}
+
+.fc-button-group {
+  margin-right: 10px;
+}
+
+.fc-toolbar-title {
+  margin: 0;
+}
+
+.fc-button-group button,
+.fc-today-button {
+  font-size: 14px;
+}
+
+/* Media query for smaller screens */
+@media only screen and (max-width: 600px) {
+  .fc-header-toolbar {
+    flex-direction: column;
+  }
+
+  .fc-toolbar-chunk {
+    margin-bottom: 10px;
+  }
+
+  .fc-button-group {
+    margin: 0;
+  }
+
+  .fc-button-group button,
+  .fc-today-button {
+    font-size: 12px;
+  }
 }
