@@ -5,7 +5,9 @@ export class RequestRoom {
   date?: Date;
   startTime?: Date;
   endTime?: Date;
-  roomId?: string;
+  start_date?: Date;
+  end_date?: Date;
+  room_id?: string;
   status?: StateRequestEnum;
-  userId?: string;
+  user_id?: string;
 }

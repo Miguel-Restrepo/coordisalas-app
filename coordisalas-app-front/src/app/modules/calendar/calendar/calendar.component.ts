@@ -13,15 +13,19 @@ import { INITIAL_EVENTS, createEventId } from './event-utils';
 import esLocale from '@fullcalendar/core/locales/es';
 import { CalendarService } from 'src/app/services/Calendar/calendar.service';
 import { ServiceConfig } from 'src/app/config';
-
+import { SessionStorageService } from 'src/app/services';
+import { RequestService } from 'src/app/services';
+import { RequestRoom } from 'src/app/models';
+import { StateRequestEnum } from 'src/app/enums';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
 })
 export class CalendarComponent implements OnInit {
+  public userId: string = '';
   selectedFilterType: string = 'room';
-  selectedRoom: string = '';
+  selectedRoom: string = 'Sala A';
   selectedUser: string = '';
   calendarVisible = true;
   url: string = `${ServiceConfig.API_URL}request-room/approve/room/Sala_A`;
@@ -34,7 +38,7 @@ export class CalendarComponent implements OnInit {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
     },
     initialView: 'dayGridMonth',
-    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    //initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
     selectable: true,
@@ -49,6 +53,14 @@ export class CalendarComponent implements OnInit {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
+    eventAdd: (x) =>
+      this.createRequestRoom(
+        this.userId,
+        this.selectedRoom,
+        x.event.start,
+        x.event.end,
+        StateRequestEnum.Approved
+      ),
     /* you can update a remote database when these fire:
     eventAdd:
     eventChange:
@@ -57,7 +69,43 @@ export class CalendarComponent implements OnInit {
   };
   currentEvents: EventApi[] = [];
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private sessionStorage: SessionStorageService,
+    public requestRoomService: RequestService
+  ) {}
+
+  setUserId() {
+    let user = this.sessionStorage.getItem('usuario');
+    this.userId = user.document;
+  }
+
+  createRequestRoom(
+    userId: string,
+    room: string,
+    startDate: Date | null,
+    endDate: Date | null,
+    status: StateRequestEnum
+  ) {
+    console.log('hola');
+
+    let model = {
+      date: startDate,
+      start_date: startDate,
+      end_date: endDate,
+      room_id: room,
+      user_id: userId,
+      status: status,
+    } as RequestRoom;
+    this.requestRoomService.createRequestRoom(model).subscribe(
+      (data) => {
+        this.requestRoomService.requestRoomSubject.next(true);
+      },
+      (error) => {
+        console.error('Error al crear', error);
+      }
+    );
+  }
 
   handleCalendarToggle() {
     this.calendarVisible = !this.calendarVisible;
@@ -101,6 +149,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setUserId();
     this.loadEvents();
   }
 
