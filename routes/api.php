@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TimeBussyController;
@@ -60,13 +62,13 @@ Route::controller(TimeBussyController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('user', 'index');
-    Route::get('user/{id}', 'show');
-    Route::post('user', 'store');
-    Route::put('user/{id}', 'update');
-    Route::delete('user/{id}/delete', 'destroy');
+  Route::get('user', 'index');
+  Route::get('user/{id}', 'show');
+  Route::post('user', 'store');
+  Route::put('user/{id}', 'update');
+  Route::delete('user/{id}/delete', 'destroy');
 });
-
+/*
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   return $request->user();
-});
+});*/

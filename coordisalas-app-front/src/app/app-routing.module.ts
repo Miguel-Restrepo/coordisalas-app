@@ -4,6 +4,7 @@ import { RoomListComponent } from './modules/room/components/room-list/room-list
 import { LoginComponent } from './modules/security/login/login.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { CalendarComponent } from './modules/calendar/calendar/calendar.component';
+import { UserListComponent } from './modules/user/components/user-list/user-list.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,11 @@ const routes: Routes = [
   {
     path: 'calendario',
     component: CalendarComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'usuarios',
+    component: UserListComponent,
     canActivate: [AuthenticationGuard],
   },
   {

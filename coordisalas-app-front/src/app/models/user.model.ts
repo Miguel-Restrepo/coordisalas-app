@@ -1,8 +1,8 @@
 import { RolEnum } from '../enums';
 
 export class User {
-  document?: string;
+  document: string = '';;
   name?: string;
-  lastName?: string;
+  last_name?: string;
   role?: RolEnum;
 }

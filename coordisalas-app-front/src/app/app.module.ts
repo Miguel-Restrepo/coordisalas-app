@@ -11,6 +11,7 @@ import { FooterComponent } from './public/master-page/footer/footer.component';
 import { HeaderComponent } from './public/master-page/header/header.component';
 import { SharedModule } from './shared/shared.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { UserModule } from './modules/user/user.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
@@ -24,6 +25,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     HttpClientModule,
     NgbModule,
     FullCalendarModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent],

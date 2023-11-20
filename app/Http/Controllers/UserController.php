@@ -11,13 +11,15 @@ class UserController extends Controller
     public function index()
     {
         $acercades = User::all();
+        unset($acercades->password);
         return $acercades;
     }
 
     //Get find id
     public function show($id)
     {
-        $objeto = Request::find($id);
+        $objeto = User::find($id);
+        unset($objeto->password);
         return $objeto;
     }
 
@@ -25,7 +27,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $objeto = User::create($request->all());
+        $objeto['password'] = bcrypt($objeto['password']); 
         $objeto->save();
+        unset($objeto->password);
         return $objeto;
     }
 
@@ -34,6 +38,7 @@ class UserController extends Controller
     {
         $objeto = User::find($id);
         $objeto->update($request->all());
+        unset($objeto->password);
         return $objeto;
     }
 
@@ -42,6 +47,7 @@ class UserController extends Controller
     {
         $objeto = User::find($id);
         $objeto->delete();
+        unset($objeto->password);
         return $objeto;
     }
 }
