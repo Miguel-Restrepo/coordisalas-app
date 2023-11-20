@@ -5,9 +5,18 @@
       <div class="container mx-auto flex items-center justify-between">
         <!-- Logo y hora/fecha -->
         <div class="flex items-center">
-          <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg
+            class="h-6 w-6 text-gray-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
           <div>
             <p class="text-sm font-bold">{{ date }}</p>
@@ -15,10 +24,17 @@
         </div>
         <!-- Bienvenido y menú -->
         <div class="flex items-center">
-          <p class="text-sm mr-2">Bienvenido(a): {{ name }} </p>
+          <p class="text-sm mr-2">Bienvenido(a): {{ name }}</p>
           <button class="bg-blue-100 p-1 rounded-full">
-            <svg class="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
+            <svg
+              class="h-8 w-8 text-blue-500"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
@@ -30,7 +46,11 @@
     <div class="bg-white py-4">
       <div class="container mx-auto flex items-center justify-between">
         <!-- Imagen a la izquierda -->
-        <img src="../../../../../assets/images/facultad_ingenierias.png.jpg" alt="Imagen" style="height: 5.9rem;">
+        <img
+          src="../../../../../assets/images/facultad_ingenierias.png.jpg"
+          alt="Imagen"
+          style="height: 5.9rem"
+        />
         <!-- Texto a la derecha -->
         <div>
           <p class="text-4xl line-height-10">CoordiSalasUC</p>
@@ -45,22 +65,24 @@
     <div class="bg-blue-600 text-white py-2">
       <div class="container mx-auto flex items-center justify-between">
         <div class="flex items-center space-x-4 flex-1">
-          <button class="text-sm flex-1"  [routerLink]="'/inicio'">Inicio</button>
+          <button class="text-sm flex-1" [routerLink]="'/inicio'">
+            Inicio
+          </button>
           <div class="border-l border-white h-6"></div>
           <div class="relative group flex-1" [routerLink]="'/usuarios'">
-            <button class="text-sm group-hover:bg-blue-700" >Usuarios</button>
+            <button class="text-sm group-hover:bg-blue-700">Usuarios</button>
           </div>
           <div class="border-l border-white h-6"></div>
           <div class="relative group flex-1" [routerLink]="'/salas'">
-            <button class="text-sm group-hover:bg-blue-700" >Aulas</button>
+            <button class="text-sm group-hover:bg-blue-700">Aulas</button>
           </div>
           <div class="border-l border-white h-6"></div>
           <div class="relative group flex-1" [routerLink]="'/inicio'">
-            <button class="text-sm group-hover:bg-blue-700" >Horarios</button>
+            <button class="text-sm group-hover:bg-blue-700">Horarios</button>
           </div>
           <div class="border-l border-white h-6"></div>
           <div class="relative group flex-1" [routerLink]="'/reservas'">
-            <button class="text-sm group-hover:bg-blue-700" >Reservas</button>
+            <button class="text-sm group-hover:bg-blue-700">Reservas</button>
           </div>
         </div>
       </div>
