@@ -7,6 +7,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { ViewUserComponent } from './components/view-user/view-user.component';
 
 
 
@@ -15,7 +16,8 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     UserListComponent,
     CreateUserComponent,
     DeleteUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    ViewUserComponent
   ],
   imports: [
     CommonModule,

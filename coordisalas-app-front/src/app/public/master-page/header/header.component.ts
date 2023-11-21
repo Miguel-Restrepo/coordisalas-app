@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { User } from 'src/app/models';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ViewUserComponent } from 'src/app/modules/user/components/view-user/view-user.component';
 import { SessionStorageService } from 'src/app/services';
 
 @Component({
@@ -22,7 +24,9 @@ export class HeaderComponent {
   public name: string = '';
 
   constructor(
-    private sessionStorage: SessionStorageService
+    private sessionStorage: SessionStorageService,
+    private router: Router,
+    private modalService: NgbModal
   ) {
 
   }
@@ -45,5 +49,15 @@ export class HeaderComponent {
   setData() {
     let user = this.sessionStorage.getItem('usuario')
     this.name = user.name;
+  }
+
+  logout(){
+    this.sessionStorage.clear();
+    this.router.navigate(["/iniciar-sesion"]);
+  }
+
+  viewProfile(){
+    const modalRef = this.modalService.open(ViewUserComponent);
+    modalRef.componentInstance.data = this.sessionStorage.getItem('usuario');
   }
 }
