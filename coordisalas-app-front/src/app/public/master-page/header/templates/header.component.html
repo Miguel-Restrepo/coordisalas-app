@@ -4,9 +4,9 @@
     <div class="bg-blue-100 border-b border-blue-300 py-2">
       <div class="container mx-auto flex items-center justify-between">
         <!-- Logo y hora/fecha -->
-        <div class="flex items-center">
+        <div class="flex items-center m">
           <svg
-            class="h-6 w-6 text-gray-500"
+            class="h-6 w-6 text-gray-500 mr-1"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -22,26 +22,56 @@
             <p class="text-sm font-bold">{{ date }}</p>
           </div>
         </div>
-        <!-- Bienvenido y menú -->
+
+        <!-- Mensaje de bienvenida, icono de usuario y dropdown -->
         <div class="flex items-center">
-          <p class="text-sm mr-2">Bienvenido(a): {{ name }}</p>
-          <button class="bg-blue-100 p-1 rounded-full">
-            <svg
-              class="h-8 w-8 text-blue-500"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+          <svg
+            class="h-8 w-8 text-blue-500"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <div ngbDropdown class="d-inline-block ml-1">
+            <!-- Botón del dropdown con el icono de usuario -->
+            <button
+              type="button"
+              class=""
+              id="dropdownBasic1"
+              ngbDropdownToggle
             >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          </button>
+              <span class="text-sm mr-2">Bienvenido(a): {{ name }}</span>
+            </button>
+            <!-- Opciones del dropdown para el usuario -->
+            <div
+              ngbDropdownMenu
+              aria-labelledby="dropdownBasic1"
+              class="bg-blue-100"
+            >
+              <!-- Aquí puedes agregar las opciones del dropdown para el usuario -->
+              <button
+                class="hover:bg-blue-500 hover:text-white"
+                ngbDropdownItem
+              >
+                Perfil
+              </button>
+              <button
+                class="hover:bg-blue-500 hover:text-white"
+                ngbDropdownItem
+              >
+                Cerrar sesión
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
     <!-- Fondo blanco con imagen y texto -->
     <div class="bg-white py-4">
       <div class="container mx-auto flex items-center justify-between">

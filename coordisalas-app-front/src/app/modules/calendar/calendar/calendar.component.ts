@@ -75,7 +75,7 @@ export class CalendarComponent implements OnInit {
     public requestRoomService: RequestService
   ) {}
 
-  setUserId() {
+  getUserId() {
     let user = this.sessionStorage.getItem('usuario');
     this.userId = user.document;
   }
@@ -105,6 +105,7 @@ export class CalendarComponent implements OnInit {
         console.error('Error al crear', error);
       }
     );
+    this.loadEvents();
   }
 
   handleCalendarToggle() {
@@ -149,7 +150,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setUserId();
+    this.getUserId();
     this.loadEvents();
   }
 
