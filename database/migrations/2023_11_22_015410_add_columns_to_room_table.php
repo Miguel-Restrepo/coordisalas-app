@@ -19,7 +19,7 @@ return new class extends Migration
       $table->integer('available_seats')->default(0);
       $table->integer('functional_computers')->default(0);
       $table->integer('total_computers')->default(0);
-      $table->longText('description')->nullable();;
+      $table->longText('description')->nullable();
     });
   }
 

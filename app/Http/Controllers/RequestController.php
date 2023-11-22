@@ -25,6 +25,9 @@ class RequestController extends Controller
         'title' => $room->users->name . " " . $room->room->name,
         'start' => $room->start_date,
         'end' => $room->end_date,
+        'startRecur' => $room->start_date_recurrent,
+        'endRecur'=> $room->end_date_recurrent,
+        'isRecur'=> $room->is_recurring_event
       ];
     });
     return $transformedRooms;
@@ -39,6 +42,9 @@ class RequestController extends Controller
         'title' => $room->users->name . " " . $room->room->name,
         'start' => $room->start_date,
         'end' => $room->end_date,
+        'startRecur' => $room->start_date_recurrent,
+        'endRecur'=> $room->end_date_recurrent,
+        'isRecur'=> $room->is_recurring_event
       ];
     });
     return $transformedRooms;
@@ -54,6 +60,9 @@ class RequestController extends Controller
         'title' => $room->users->name . " " . $room->room->name,
         'start' => $room->start_date,
         'end' => $room->end_date,
+        'startRecur' => $room->start_date_recurrent,
+        'endRecur'=> $room->end_date_recurrent,
+        'isRecur'=> $room->is_recurring_event
       ];
     });
     return $transformedRooms;
