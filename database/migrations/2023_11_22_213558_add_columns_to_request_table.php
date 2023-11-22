@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('start_date_recurrent')->nullable();
             $table->date('end_date_recurrent')->nullable();
             $table->string('reason')->default('');
+            $table->longText('reason_rejected')->nullable();
         });
     }
 
@@ -34,6 +35,8 @@ return new class extends Migration
             $table->dropColumn('is_recurring_event');
             $table->dropColumn('start_date_recurrent');
             $table->dropColumn('end_date_recurrent');
+            $table->dropColumn('reason');
+            $table->dropColumn('reason_rejected');
         });
     }
 };

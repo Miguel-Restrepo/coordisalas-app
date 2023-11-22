@@ -48,6 +48,7 @@ Route::controller(RequestController::class)->group(function () {
     Route::get('request-room/approve/room/{room_id}', 'filterByRoom');
     Route::get('request-room/rejected', 'rejected');
     Route::get('request-room/pending', 'pending');
+    Route::get('request-room/{state}/state', 'filterByState');
     Route::get('request-room/{id}', 'show');
     Route::post('request-room', 'store');
     Route::put('request-room/{id}', 'update');

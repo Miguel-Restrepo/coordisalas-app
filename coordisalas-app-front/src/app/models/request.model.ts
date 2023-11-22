@@ -1,4 +1,6 @@
 import { StateRequestEnum } from '../enums';
+import { Room } from './room.model';
+import { User } from './user.model';
 
 export class RequestRoom {
   id?: string;
@@ -10,4 +12,10 @@ export class RequestRoom {
   room_id?: string;
   status?: StateRequestEnum;
   user_id?: string;
+  users?: User;
+  room?: Room;
+  reason?: string;
+  start_date_recurrent?: Date;
+  end_date_recurrent?: Date;
+  is_recurring_event?: boolean;
 }

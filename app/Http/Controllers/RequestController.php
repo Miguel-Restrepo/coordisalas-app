@@ -72,13 +72,41 @@ class RequestController extends Controller
   public function rejected()
   {
     $rooms = RequestRoom::with('room', 'users')->where('status', StatusRequest::Rejected->value)->get();
-    return $rooms;
+    $transformedRooms = $rooms->map(function ($room) {
+      return [
+        'id' => $room->id,
+        'title' => $room->users->name . " " . $room->room->name,
+        'start' => $room->start_date,
+        'end' => $room->end_date,
+        'startRecur' => $room->start_date_recurrent,
+        'endRecur'=> $room->end_date_recurrent,
+        'isRecur'=> $room->is_recurring_event
+      ];
+    });
+    return $transformedRooms;
   }
 
   // Get all pending
   public function pending()
   {
     $rooms = RequestRoom::with('room', 'users')->where('status', StatusRequest::Pending->value)->get();
+    $transformedRooms = $rooms->map(function ($room) {
+      return [
+        'id' => $room->id,
+        'title' => $room->users->name . " " . $room->room->name,
+        'start' => $room->start_date,
+        'end' => $room->end_date,
+        'startRecur' => $room->start_date_recurrent,
+        'endRecur'=> $room->end_date_recurrent,
+        'isRecur'=> $room->is_recurring_event
+      ];
+    });
+    return $transformedRooms;
+  }
+
+  public function filterByState($state)
+  {
+    $rooms = RequestRoom::with('room', 'users')->where('status', $state)->get();
     return $rooms;
   }
 
@@ -86,7 +114,7 @@ class RequestController extends Controller
   //Get find id
   public function show($id)
   {
-    $objeto = Request::find($id);
+    $objeto = RequestRoom::find($id);
     return $objeto;
   }
 

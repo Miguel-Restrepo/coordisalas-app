@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SessionStorageService } from '../storage/session-storage.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ServiceConfig } from 'src/app/config';
+import { StateRequestEnum } from 'src/app/enums';
 import { RequestRoom } from 'src/app/models';
+import { SessionStorageService } from '../storage/session-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,10 @@ export class RequestService {
 
   watchChanges(): Observable<boolean> {
     return this.requestRoomSubject.asObservable();
+  }
+
+  getRequestRoomsByState(state: StateRequestEnum): Observable<RequestRoom[]> {
+    return this.http.get<RequestRoom[]>(`${ServiceConfig.API_URL}${this.entity}/${state}/state`);
   }
 
   createRequestRoom(model: RequestRoom): Observable<RequestRoom> {
