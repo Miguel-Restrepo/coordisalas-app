@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TimeBussyController;
@@ -67,6 +68,14 @@ Route::controller(UserController::class)->group(function () {
   Route::post('user', 'store');
   Route::put('user/{id}', 'update');
   Route::delete('user/{id}/delete', 'destroy');
+});
+
+Route::controller(ReportsController::class)->group(function () {
+  Route::get('reports', 'index');
+  Route::get('reports/{id}', 'show');
+  Route::post('reports', 'store');
+  Route::put('reports/{id}', 'update');
+  Route::delete('reports/{id}/delete', 'destroy');
 });
 /*
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

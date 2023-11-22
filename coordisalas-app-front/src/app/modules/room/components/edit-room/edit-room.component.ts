@@ -10,7 +10,7 @@ import { RoomService } from 'src/app/services';
 })
 export class EditRoomComponent {
 
-  @Input() room: Room = new Room(); 
+  @Input() room: Room = new Room();
   form: FormGroup = this.fb.group({});
 
   constructor(
@@ -29,15 +29,33 @@ export class EditRoomComponent {
 
   protected initForm() {
     this.form = this.fb.group({
-      name: ['', [Validators.required ]],
+      name: ['', [Validators.required]],
+      videoBeam: ['', [Validators.required]],
+      tv: ['', [Validators.required]],
+      available_seats: ['', [Validators.required]],
+      functional_computers: ['', [Validators.required]],
+      total_computers: ['', [Validators.required]],
+      description: ['', [Validators.required]],
     });
 
     this.form.get('name')?.setValue(this.room.name);
+    this.form.get('videoBeam')?.setValue(this.room.videoBeam);
+    this.form.get('tv')?.setValue(this.room.tv);
+    this.form.get('available_seats')?.setValue(this.room.available_seats);
+    this.form.get('functional_computers')?.setValue(this.room.functional_computers);
+    this.form.get('total_computers')?.setValue(this.room.total_computers);
+    this.form.get('description')?.setValue(this.room.description);
   }
 
   private getModel(): Room {
     return {
       name: this.form.get('name')?.value,
+      videoBeam: this.form.get('videoBeam')?.value,
+      tv: this.form.get('tv')?.value,
+      available_seats: this.form.get('available_seats')?.value,
+      functional_computers: this.form.get('functional_computers')?.value,
+      total_computers: this.form.get('total_computers')?.value,
+      description: this.form.get('description')?.value
     } as Room;
   }
 
@@ -55,9 +73,10 @@ export class EditRoomComponent {
           this.roomService.roomSubject.next(true);
           this.activeModal.close();
         },
-          (error) => {
-            console.error('Error en el inicio de sesión', error);
-          }
-      )}
+        (error) => {
+          console.error('Error en el inicio de sesión', error);
+        }
+      )
+    }
   }
 }

@@ -28,12 +28,24 @@ export class CreateRoomComponent {
   protected initForm() {
     this.form = this.fb.group({
       name: ['', [Validators.required ]],
+      videoBeam: ['', [Validators.required ]],
+      tv: ['', [Validators.required ]],
+      available_seats: ['', [Validators.required ]],
+      functional_computers: ['', [Validators.required ]],
+      total_computers: ['', [Validators.required ]],
+      description: ['', [Validators.required ]],
     });
   }
 
   private getModel(): Room {
     return {
       name: this.form.get('name')?.value,
+      videoBeam: this.form.get('videoBeam')?.value,
+      tv: this.form.get('tv')?.value,
+      available_seats: this.form.get('available_seats')?.value,
+      functional_computers: this.form.get('functional_computers')?.value,
+      total_computers: this.form.get('total_computers')?.value,
+      description: this.form.get('description')?.value
     } as Room;
   }
 

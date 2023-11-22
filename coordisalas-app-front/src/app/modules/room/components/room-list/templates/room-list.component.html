@@ -49,6 +49,11 @@
     <thead>
       <tr>
         <th>Nombre</th>
+        <th>Sillas disponibles</th>
+        <th>Computadores Funcionales / Total</th>
+        <th>TV</th>
+        <th>VideoBeam</th>
+        <th>Descripción</th>
         <th>Acción</th>
       </tr>
     </thead>
@@ -60,6 +65,29 @@
         "
       >
         <td>{{ room.name }}</td>
+        <td>{{ room.available_seats }}</td>
+        <td>{{ room.functional_computers }}/{{ room.total_computers }}</td>
+        <td>
+          <div class="icon-container">
+            <svg *ngIf="room.tv" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="green" class="bi bi-check2" viewBox="0 0 16 16">
+              <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+            </svg>
+            <svg *ngIf="!room.tv" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-x" viewBox="0 0 16 16">
+              <path d="M3.146 3.146a.5.5 0 0 1 .708 0L8 7.293l4.146-4.147a.5.5 0 0 1 .708.708L8.707 8l4.147 4.146a.5.5 0 0 1-.708.708L8 8.707l-4.146 4.147a.5.5 0 0 1-.708-.708L7.293 8 3.146 3.854a.5.5 0 0 1 0-.708z"></path>
+            </svg>
+          </div>    
+        </td>
+        <td>
+          <div class="icon-container">
+            <svg *ngIf="room.videoBeam" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="green" class="bi bi-check2" viewBox="0 0 16 16">
+              <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+            </svg>
+            <svg *ngIf="!room.videoBeam" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-x" viewBox="0 0 16 16">
+              <path d="M3.146 3.146a.5.5 0 0 1 .708 0L8 7.293l4.146-4.147a.5.5 0 0 1 .708.708L8.707 8l4.147 4.146a.5.5 0 0 1-.708.708L8 8.707l-4.146 4.147a.5.5 0 0 1-.708-.708L7.293 8 3.146 3.854a.5.5 0 0 1 0-.708z"></path>
+            </svg>
+          </div>   
+        </td>
+        <td>{{ room.description }}</td>
         <td class="flex items-center">
           <button
             class="btn btn-warning m-1 flex items-center text-white"
