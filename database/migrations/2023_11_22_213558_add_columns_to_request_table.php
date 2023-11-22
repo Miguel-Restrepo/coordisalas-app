@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('is_recurring_event')->default(false);
             $table->date('start_date_recurrent')->nullable();
             $table->date('end_date_recurrent')->nullable();
+            $table->string('reason')->default('');
         });
     }
 
