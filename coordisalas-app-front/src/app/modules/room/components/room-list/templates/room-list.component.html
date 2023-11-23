@@ -1,24 +1,26 @@
 <div class="container mx-auto my-4 flex flex-col items-center">
   <h2 class="text-2xl dark:text-white">Lista de aulas</h2>
   <div class="flex mb-3 w-9/12 justify-between">
-    <button
-      class="btn btn-success m-1 flex items-center text-white"
-      (click)="create()"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-plus-circle-fill"
-        viewBox="0 0 16 16"
+    <ng-container *ngIf="isAdmin">
+      <button
+        class="btn btn-success m-1 flex items-center text-white"
+        (click)="create()"
       >
-        <path
-          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
-        />
-      </svg>
-      <span class="ml-2">Crear registro</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-plus-circle-fill"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+          />
+        </svg>
+        <span class="ml-2">Crear registro</span>
     </button>
+  </ng-container>
     <div class="relative w-1/4">
       <div class="input-group">
         <span class="input-group-text">
@@ -54,7 +56,9 @@
         <th>TV</th>
         <th>VideoBeam</th>
         <th>Descripción</th>
+        <ng-container *ngIf="isAdmin">
         <th>Acción</th>
+      </ng-container>
       </tr>
     </thead>
     <tbody>
@@ -88,6 +92,7 @@
           </div>   
         </td>
         <td>{{ room.description }}</td>
+        <ng-container *ngIf="isAdmin">
         <td class="flex items-center">
           <button
             class="btn btn-warning m-1 flex items-center text-white"
@@ -126,6 +131,7 @@
             <span class="ml-2">Eliminar</span>
           </button>
         </td>
+      </ng-container>
       </tr>
     </tbody>
   </table>

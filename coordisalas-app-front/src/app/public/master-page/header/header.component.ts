@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RolEnum } from 'src/app/enums';
 import { ViewUserComponent } from 'src/app/modules/user/components/view-user/view-user.component';
 import { SessionStorageService } from 'src/app/services';
 
@@ -10,10 +11,11 @@ import { SessionStorageService } from 'src/app/services';
 })
 export class HeaderComponent {
   date: string = '';
+  isAdmin: boolean = false;
   public _login = false;
   set login(value: boolean) {
     this._login = value
-    if(value){
+    if (value) {
       this.setData()
     }
   }
@@ -49,14 +51,15 @@ export class HeaderComponent {
   setData() {
     let user = this.sessionStorage.getItem('usuario')
     this.name = user.name;
+    this.isAdmin = user.role === RolEnum.Admin;
   }
 
-  logout(){
+  logout() {
     this.sessionStorage.clear();
     this.router.navigate(["/iniciar-sesion"]);
   }
 
-  viewProfile(){
+  viewProfile() {
     const modalRef = this.modalService.open(ViewUserComponent);
     modalRef.componentInstance.data = this.sessionStorage.getItem('usuario');
   }

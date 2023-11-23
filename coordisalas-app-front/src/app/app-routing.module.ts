@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard, AuthenticationGuard } from './guards';
+import { CalendarComponent } from './modules/calendar/calendar/calendar.component';
+import { RequestRoomListComponent } from './modules/request-room/components/request-room-list/request-room-list.component';
 import { RoomListComponent } from './modules/room/components/room-list/room-list.component';
 import { LoginComponent } from './modules/security/login/login.component';
-import { AuthenticationGuard } from './guards/authentication.guard';
-import { CalendarComponent } from './modules/calendar/calendar/calendar.component';
 import { UserListComponent } from './modules/user/components/user-list/user-list.component';
-import { RequestRoomListComponent } from './modules/request-room/components/request-room-list/request-room-list.component';
 
 const routes: Routes = [
   {
@@ -26,12 +26,12 @@ const routes: Routes = [
   {
     path: 'usuarios',
     component: UserListComponent,
-    canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard, AdminGuard],
   },
   {
     path: 'reservas',
     component: RequestRoomListComponent,
-    canActivate: [AuthenticationGuard],
+    canActivate: [AuthenticationGuard, AdminGuard],
   },
   {
     path: 'inicio',
@@ -48,4 +48,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

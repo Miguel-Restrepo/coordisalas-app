@@ -100,22 +100,30 @@
           <button class="text-sm flex-1" [routerLink]="'/inicio'">
             Inicio
           </button>
+          <ng-container *ngIf="isAdmin">
           <div class="border-l border-white h-6"></div>
-          <div class="relative group flex-1" [routerLink]="'/usuarios'">
+          <div  class="relative group flex-1" [routerLink]="'/usuarios'">
             <button class="text-sm group-hover:bg-blue-700">Usuarios</button>
           </div>
+        </ng-container>
+        <ng-container>
           <div class="border-l border-white h-6"></div>
           <div class="relative group flex-1" [routerLink]="'/salas'">
             <button class="text-sm group-hover:bg-blue-700">Aulas</button>
           </div>
+        </ng-container>
+        <ng-container>
           <div class="border-l border-white h-6"></div>
           <div class="relative group flex-1" [routerLink]="'/inicio'">
             <button class="text-sm group-hover:bg-blue-700">Horarios</button>
           </div>
+        </ng-container>
+        <ng-container *ngIf="isAdmin">
           <div class="border-l border-white h-6"></div>
-          <div class="relative group flex-1" [routerLink]="'/reservas'">
+          <div  class="relative group flex-1" [routerLink]="'/reservas'">
             <button class="text-sm group-hover:bg-blue-700">Reservas</button>
           </div>
+        </ng-container>
         </div>
       </div>
     </div>

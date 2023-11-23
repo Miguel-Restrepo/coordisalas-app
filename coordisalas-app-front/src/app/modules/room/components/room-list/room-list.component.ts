@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Room } from 'src/app/models';
-import { RoomService } from 'src/app/services';
+import { RoomService, SessionStorageService } from 'src/app/services';
 import { AsyncPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import {
 import { EditRoomComponent } from '../edit-room/edit-room.component';
 import { DeleteRoomComponent } from '../delete-room/delete-room.component';
 import { CreateRoomComponent } from '../create-room/create-room.component';
+import { RolEnum } from 'src/app/enums';
 
 @Component({
   selector: 'app-room-list',
@@ -23,10 +24,12 @@ export class RoomListComponent implements OnInit {
   searchTerm = '';
   pageSize = 5;
   currentPage = 1;
+  isAdmin: boolean = false;
 
   constructor(
     private roomService: RoomService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private sessionStorage: SessionStorageService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +41,8 @@ export class RoomListComponent implements OnInit {
     this.roomService.roomSubject.subscribe((data: boolean) => {
       this.getRooms();
     });
+    let user = this.sessionStorage.getItem('usuario')
+    this.isAdmin = user.role === RolEnum.Admin;
   }
 
   getRooms() {
