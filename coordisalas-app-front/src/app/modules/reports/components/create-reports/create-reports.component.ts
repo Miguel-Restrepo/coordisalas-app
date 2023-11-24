@@ -42,7 +42,7 @@ export class CreateReportsComponent {
       electrical_damage: this.form.get('electrical_damage')?.value,
       flooding: this.form.get('flooding')?.value,
       damaged_PC: this.form.get('damaged_PC')?.value,
-      user_id: user.id
+      user_id: user.document
     } as Reports;
   }
 
