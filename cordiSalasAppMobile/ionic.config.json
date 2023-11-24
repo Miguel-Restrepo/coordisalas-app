@@ -1,0 +1,7 @@
+{
+  "name": "cordiSalasAppMobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
