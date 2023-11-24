@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CalendarModule } from './modules/calendar/calendar.module';
+import { ReportsModule } from './modules/reports/reports.module';
 import { RequestRoomModule } from './modules/request-room/request-room.module';
 import { RoomModule } from './modules/room/room.module';
 import { SecurityModule } from './modules/security/security.module';
@@ -27,7 +28,8 @@ import { SharedModule } from './shared/shared.module';
     NgbModule,
     FullCalendarModule,
     UserModule,
-    RequestRoomModule
+    RequestRoomModule,
+    ReportsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

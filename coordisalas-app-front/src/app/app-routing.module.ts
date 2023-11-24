@@ -6,6 +6,7 @@ import { RequestRoomListComponent } from './modules/request-room/components/requ
 import { RoomListComponent } from './modules/room/components/room-list/room-list.component';
 import { LoginComponent } from './modules/security/login/login.component';
 import { UserListComponent } from './modules/user/components/user-list/user-list.component';
+import { ReportsListComponent } from './modules/reports/components/reports-list/reports-list.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,11 @@ const routes: Routes = [
   {
     path: 'reservas',
     component: RequestRoomListComponent,
+    canActivate: [AuthenticationGuard, AdminGuard],
+  },
+  {
+    path: 'reports',
+    component: ReportsListComponent,
     canActivate: [AuthenticationGuard, AdminGuard],
   },
   {

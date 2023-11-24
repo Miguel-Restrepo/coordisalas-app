@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RolEnum } from 'src/app/enums';
+import { CreateReportsComponent } from 'src/app/modules/reports/components/create-reports/create-reports.component';
 import { ViewUserComponent } from 'src/app/modules/user/components/view-user/view-user.component';
 import { SessionStorageService } from 'src/app/services';
 
@@ -62,5 +63,9 @@ export class HeaderComponent {
   viewProfile() {
     const modalRef = this.modalService.open(ViewUserComponent);
     modalRef.componentInstance.data = this.sessionStorage.getItem('usuario');
+  }
+
+  createReport(){
+    this.modalService.open(CreateReportsComponent, { size: 'lg' })
   }
 }

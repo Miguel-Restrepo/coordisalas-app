@@ -14,7 +14,7 @@ export class AdminGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (route?.routeConfig?.path === 'reservas' || route?.routeConfig?.path === 'usuarios') {
+    if (route?.routeConfig?.path === 'reservas' || route?.routeConfig?.path === 'usuarios' || route?.routeConfig?.path === 'reports') {
       let user = this.sessionStorage.getItem('usuario')
       if (user.role === RolEnum.Admin) {
         return true;

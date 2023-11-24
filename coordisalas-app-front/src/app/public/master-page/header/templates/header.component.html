@@ -124,6 +124,18 @@
             <button class="text-sm group-hover:bg-blue-700">Reservas</button>
           </div>
         </ng-container>
+        <ng-container *ngIf="isAdmin">
+          <div class="border-l border-white h-6"></div>
+            <div  class="relative group flex-1" [routerLink]="'/reports'">
+              <button class="text-sm group-hover:bg-blue-700">Novedades</button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!isAdmin">
+            <div class="border-l border-white h-6"></div>
+              <div  class="relative group flex-1">
+                <button class="text-sm group-hover:bg-blue-700" (click)="createReport()">Crear novedad</button>
+              </div>
+            </ng-container>
         </div>
       </div>
     </div>
