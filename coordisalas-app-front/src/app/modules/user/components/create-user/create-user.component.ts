@@ -28,12 +28,28 @@ export class CreateUserComponent {
 
   protected initForm() {
     this.form = this.fb.group({
-      document: ['', [Validators.required]],
+      document: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(12),
+        Validators.pattern(/^\d+$/)
+      ]],
       name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
       role: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password:  [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
+        ]
+      ],
     });
+  }
+
+  public fieldValid(fieldName: string) {
+    return (this.form.get(fieldName)?.invalid && (this.form.get(fieldName)?.dirty || this.form.get(fieldName)?.touched));
   }
 
   togglePassword() {

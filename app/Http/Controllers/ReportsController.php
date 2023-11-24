@@ -11,7 +11,7 @@ class ReportsController extends Controller
     // Get all
     public function index()
     {
-        $acercades = Reports::all();
+        $acercades = Reports::with('user')->get();
         return $acercades;
     }
 

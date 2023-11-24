@@ -11,4 +11,8 @@ class Reports extends Model
     protected $table= "reports";
     public $timestamps = true;
     protected $guarded= [];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

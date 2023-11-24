@@ -16,6 +16,9 @@
       <div class="mb-3">
         <label for="document" class="form-label">Documento:</label>
         <input type="text" class="form-control" id="document" name="document" formControlName="document" >
+        <div *ngIf="fieldValid('document')" class="text-red-500 text-sm mt-2">
+          documento no valida.
+        </div>
       </div>
       <div class="mb-3">
         <label for="name" class="form-label">Nombre:</label>
@@ -38,6 +41,9 @@
         <div class="input-group">
           <input type="password" class="form-control" id="password" name="password" formControlName="password">
           <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()">Show</button>
+        </div>
+        <div *ngIf="fieldValid('password')" class="text-red-500 text-sm mt-2">
+          Contraseña no valida.
         </div>
       </div>
     </form>

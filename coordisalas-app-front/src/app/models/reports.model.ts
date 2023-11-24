@@ -1,3 +1,5 @@
+import { User } from './user.model';
+
 export class Reports {
   id: number = 0;
   description?: string;
@@ -5,4 +7,5 @@ export class Reports {
   flooding?: boolean;
   damaged_PC?: boolean;
   user_id?: string;
+  user?: User;
 }

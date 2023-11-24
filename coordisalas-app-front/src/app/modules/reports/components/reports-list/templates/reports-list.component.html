@@ -76,7 +76,7 @@
             </svg>
           </div>   
         </td>
-        <td>{{ reports.user_id }}</td>
+        <td>{{ reports.user?.name }} {{ reports.user?.last_name }}</td>
         <ng-container *ngIf="isAdmin">
         <td class="flex items-center">
          
