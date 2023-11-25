@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatusRequest;
 use App\Models\RequestRoom;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RequestController extends Controller
@@ -23,11 +24,11 @@ class RequestController extends Controller
       return [
         'id' => $room->id,
         'title' => $room->users->name . " " . $room->room->name,
-        'start' => $room->start_date,
-        'end' => $room->end_date,
+        'start' =>  $this->converDates($room->date, $room->start_date),
+        'end' => $this->converDates($room->date, $room->end_date),
         'startRecur' => $room->start_date_recurrent,
-        'endRecur'=> $room->end_date_recurrent,
-        'isRecur'=> $room->is_recurring_event
+        'endRecur' => $room->end_date_recurrent,
+        'isRecur' => $room->is_recurring_event
       ];
     });
     return $transformedRooms;
@@ -40,11 +41,11 @@ class RequestController extends Controller
       return [
         'id' => $room->id,
         'title' => $room->users->name . " " . $room->room->name,
-        'start' => $room->start_date,
-        'end' => $room->end_date,
+        'start' =>  $this->converDates($room->date, $room->start_date),
+        'end' => $this->converDates($room->date, $room->end_date),
         'startRecur' => $room->start_date_recurrent,
-        'endRecur'=> $room->end_date_recurrent,
-        'isRecur'=> $room->is_recurring_event
+        'endRecur' => $room->end_date_recurrent,
+        'isRecur' => $room->is_recurring_event
       ];
     });
     return $transformedRooms;
@@ -58,11 +59,11 @@ class RequestController extends Controller
       return [
         'id' => $room->id,
         'title' => $room->users->name . " " . $room->room->name,
-        'start' => $room->start_date,
-        'end' => $room->end_date,
+        'start' =>  $this->converDates($room->date, $room->start_date),
+        'end' => $this->converDates($room->date, $room->end_date),
         'startRecur' => $room->start_date_recurrent,
-        'endRecur'=> $room->end_date_recurrent,
-        'isRecur'=> $room->is_recurring_event
+        'endRecur' => $room->end_date_recurrent,
+        'isRecur' => $room->is_recurring_event
       ];
     });
     return $transformedRooms;
@@ -76,11 +77,11 @@ class RequestController extends Controller
       return [
         'id' => $room->id,
         'title' => $room->users->name . " " . $room->room->name,
-        'start' => $room->start_date,
-        'end' => $room->end_date,
+        'start' =>  $this->converDates($room->date, $room->start_date),
+        'end' => $this->converDates($room->date, $room->end_date),
         'startRecur' => $room->start_date_recurrent,
-        'endRecur'=> $room->end_date_recurrent,
-        'isRecur'=> $room->is_recurring_event
+        'endRecur' => $room->end_date_recurrent,
+        'isRecur' => $room->is_recurring_event
       ];
     });
     return $transformedRooms;
@@ -91,14 +92,15 @@ class RequestController extends Controller
   {
     $rooms = RequestRoom::with('room', 'users')->where('status', StatusRequest::Pending->value)->get();
     $transformedRooms = $rooms->map(function ($room) {
+      $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $room->date . ' ' . $room->start_time);
       return [
         'id' => $room->id,
         'title' => $room->users->name . " " . $room->room->name,
-        'start' => $room->start_date,
-        'end' => $room->end_date,
+        'start' =>  $this->converDates($room->date, $room->start_date),
+        'end' => $this->converDates($room->date, $room->end_date),
         'startRecur' => $room->start_date_recurrent,
-        'endRecur'=> $room->end_date_recurrent,
-        'isRecur'=> $room->is_recurring_event
+        'endRecur' => $room->end_date_recurrent,
+        'isRecur' => $room->is_recurring_event
       ];
     });
     return $transformedRooms;
@@ -140,5 +142,17 @@ class RequestController extends Controller
     $objeto = RequestRoom::find($id);
     $objeto->delete();
     return $objeto;
+  }
+
+  private function converDates($date1, $date2)
+  {
+    $fechaCarbon = Carbon::parse($date1);
+
+    $horaCarbon = Carbon::parse($date2)->format('H:i:s');
+
+    $fechaCompleta = $fechaCarbon->toDateString() . ' ' . $horaCarbon;
+
+    return Carbon::parse($fechaCompleta);
+
   }
 }
