@@ -1,0 +1,61 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">Crear Usuario</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="closedModal()"
+      data-dismiss="modal"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label for="document" class="form-label">Documento:</label>
+        <input type="text" class="form-control" id="document" name="document" formControlName="document" >
+        <div *ngIf="fieldValid('document')" class="text-red-500 text-sm mt-2">
+          documento no valida.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre:</label>
+        <input type="text" class="form-control" id="name" name="name" formControlName="name">
+      </div>
+      <div class="mb-3">
+        <label for="last_name" class="form-label">Apellido:</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" formControlName="last_name">
+      </div>
+      <div class="mb-3">
+        <label for="role" class="form-label">Rol:</label>
+        <select class="form-select" id="role" name="role" formControlName="role">
+          <option value="Administrador">Administrador</option>
+          <option value="Docente">Docente</option>
+          <option value="Estudiante">Estudiante</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña:</label>
+        <div class="input-group">
+          <input type="password" class="form-control" id="password" name="password" formControlName="password">
+          <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()">Show</button>
+        </div>
+        <div *ngIf="fieldValid('password')" class="text-red-500 text-sm mt-2">
+          Contraseña no valida.
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      class="btn btn-secondary"
+      (click)="closedModal()"
+      data-dismiss="modal"
+    >
+      Cerrar
+    </button>
+    <button class="btn btn-primary" (click)="create()">Crear Usuario</button>
+  </div>
+</div>

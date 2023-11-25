@@ -1,0 +1,51 @@
+<div class="demo-app">
+  <div class="demo-app-sidebar">
+    <div class="demo-app-sidebar-section">
+      <label>
+        <input
+          type="checkbox"
+          [checked]="calendarOptions.weekends"
+          (change)="handleWeekendsToggle()"
+        />
+        Mostrar fines de semana
+      </label>
+      <label>
+        Filtro:
+        <select (change)="onSelectFilter($event)">
+          <option value="room">Aula</option>
+          <option value="user">Usuario</option>
+        </select>
+      </label>
+
+      <label *ngIf="selectedFilterType === 'room'">
+        Seleccionar Aula:
+        <select (change)="onSelectRoom($event)">
+          <option value="Sala_A">Sala A</option>
+          <option value="Sala_B">Sala B</option>
+        </select>
+      </label>
+
+      <label *ngIf="selectedFilterType === 'user'">
+        Seleccionar Usuario:
+        <select (change)="onSelectUser($event)">
+          <option value="admin">admin</option>
+          <option value="admin2">admin2</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="demo-app-main">
+    <full-calendar
+      *ngIf="calendarVisible"
+      [options]="calendarOptions"
+      class="p-4"
+    >
+      <ng-template #eventContent let-arg>
+        <b>{{ arg.timeText }}</b>
+        <i>{{ arg.event.title }}</i>
+        <i>{{ arg.event.user }}</i>
+      </ng-template>
+    </full-calendar>
+  </div>
+</div>
