@@ -17,6 +17,9 @@ import { SessionStorageService } from 'src/app/services';
 import { RequestService } from 'src/app/services';
 import { RequestRoom } from 'src/app/models';
 import { StateRequestEnum } from 'src/app/enums';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateRequestComponent } from '../create-request/create-request.component';
+import { DeleteRequestComponent } from '../delete-request/delete-request.component';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -43,6 +46,7 @@ export class CalendarComponent implements OnInit {
     editable: true,
     selectable: true,
     selectMirror: true,
+    unselectCancel: '.request-form',
     dayMaxEvents: true,
     slotLabelFormat: {
       hour: 'numeric',
@@ -50,18 +54,12 @@ export class CalendarComponent implements OnInit {
       hour12: true,
       meridiem: 'short',
     },
+    displayEventEnd: true,
+    //allDaySlot: false,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this),
-    eventAdd: (x) =>
-      this.createRequestRoom(
-        this.userId,
-        this.selectedRoom,
-        x.event.start,
-        x.event.end,
-        StateRequestEnum.Approved
-      ),
     /* you can update a remote database when these fire:
+    eventsSet: this.handleEvents.bind(this),
     eventAdd:
     eventChange:
     eventRemove:
@@ -72,40 +70,13 @@ export class CalendarComponent implements OnInit {
   constructor(
     private changeDetector: ChangeDetectorRef,
     private sessionStorage: SessionStorageService,
+    private modalService: NgbModal,
     public requestRoomService: RequestService
   ) {}
 
   getUserId() {
     let user = this.sessionStorage.getItem('usuario');
     this.userId = user.document;
-  }
-
-  createRequestRoom(
-    userId: string,
-    room: string,
-    startDate: Date | null,
-    endDate: Date | null,
-    status: StateRequestEnum
-  ) {
-    console.log('hola');
-
-    let model = {
-      date: startDate,
-      start_date: startDate,
-      end_date: endDate,
-      room_id: room,
-      user_id: userId,
-      status: status,
-    } as RequestRoom;
-    this.requestRoomService.createRequestRoom(model).subscribe(
-      (data) => {
-        this.requestRoomService.requestRoomSubject.next(true);
-      },
-      (error) => {
-        console.error('Error al crear', error);
-      }
-    );
-    this.loadEvents();
   }
 
   handleCalendarToggle() {
@@ -118,35 +89,29 @@ export class CalendarComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      });
-    }
+    let model = {
+      date: selectInfo.start,
+      start_date: selectInfo.start,
+      end_date: selectInfo.end,
+      room_id: this.selectedRoom,
+      user_id: this.userId,
+      status: StateRequestEnum.Approved,
+    } as RequestRoom;
+    this.create(model).then(() => {
+      calendarApi.unselect();
+      calendarApi.refetchEvents();
+      //calendarApi.changeView(calendarApi.view.type);
+    });
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    if (
-      confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      )
-    ) {
-      clickInfo.event.remove();
-    }
-  }
-
-  handleEvents(events: EventApi[]) {
-    this.currentEvents = events;
-    this.changeDetector.detectChanges();
+    const calendarApi = clickInfo.view.calendar;
+    this.delete(clickInfo.event.id, clickInfo.event.title).then(() => {
+      calendarApi.unselect();
+      calendarApi.refetchEvents();
+      //calendarApi.changeView(calendarApi.view.type);
+    });
   }
 
   ngOnInit() {
@@ -189,5 +154,26 @@ export class CalendarComponent implements OnInit {
   filterByUser(user: string) {
     this.url = `${ServiceConfig.API_URL}request-room/approve/user/${user}`;
     this.loadEvents();
+  }
+
+  create(requestRoom: RequestRoom): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const modalRef = this.modalService.open(CreateRequestComponent, {
+        size: 'lg',
+      });
+      modalRef.componentInstance.model = requestRoom;
+      modalRef.componentInstance.resolve = resolve;
+    });
+  }
+
+  delete(id: String, title: String): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const modalRef = this.modalService.open(DeleteRequestComponent, {
+        size: 'lg',
+      });
+      modalRef.componentInstance.id = id;
+      modalRef.componentInstance.title = title;
+      modalRef.componentInstance.resolve = resolve;
+    });
   }
 }

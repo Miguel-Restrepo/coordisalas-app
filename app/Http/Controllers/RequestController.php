@@ -23,9 +23,11 @@ class RequestController extends Controller
     $transformedRooms = $rooms->map(function ($room) {
       return [
         'id' => $room->id,
-        'title' => $room->users->name . " " . $room->room->name,
+        'title' => " " . $room->users->name . " " . $room->room->name . " " . $room->reason . " " . $room->reason,
         'start' =>  $this->converDates($room->date, $room->start_date),
+        'startTime' =>  $this->converDates($room->date, $room->start_date),
         'end' => $this->converDates($room->date, $room->end_date),
+        'endTime' => $this->converDates($room->date, $room->end_date),
         'startRecur' => $room->start_date_recurrent,
         'endRecur' => $room->end_date_recurrent,
         'isRecur' => $room->is_recurring_event
@@ -40,9 +42,11 @@ class RequestController extends Controller
     $transformedRooms = $rooms->map(function ($room) {
       return [
         'id' => $room->id,
-        'title' => $room->users->name . " " . $room->room->name,
+        'title' => " " . $room->users->name . " " . $room->room->name . " " . $room->reason,
         'start' =>  $this->converDates($room->date, $room->start_date),
+        'startTime' =>  $this->converDates($room->date, $room->start_date),
         'end' => $this->converDates($room->date, $room->end_date),
+        'endTime' => $this->converDates($room->date, $room->end_date),
         'startRecur' => $room->start_date_recurrent,
         'endRecur' => $room->end_date_recurrent,
         'isRecur' => $room->is_recurring_event
@@ -56,15 +60,24 @@ class RequestController extends Controller
     $room_id = str_replace('_', ' ', $room_id);
     $rooms = RequestRoom::with('room', 'users')->where('status', StatusRequest::Approved->value)->where('room_id', $room_id)->get();
     $transformedRooms = $rooms->map(function ($room) {
-      return [
-        'id' => $room->id,
-        'title' => $room->users->name . " " . $room->room->name,
-        'start' =>  $this->converDates($room->date, $room->start_date),
-        'end' => $this->converDates($room->date, $room->end_date),
-        'startRecur' => $room->start_date_recurrent,
-        'endRecur' => $room->end_date_recurrent,
-        'isRecur' => $room->is_recurring_event
-      ];
+      $roomData = [
+            'id' => $room->id,
+            'title' => " " . $room->users->name . " " . $room->room->name . " " . $room->reason,
+            'start' => $this->converDates($room->date, $room->start_date),
+            'end' => $this->converDates($room->date, $room->end_date),
+            'isRecur' => $room->is_recurring_event
+        ];
+
+        if ($room->is_recurring_event) {
+            $startTime = strtotime($this->converDates($room->date, $room->start_date));
+            $endTime = strtotime($this->converDates($room->date, $room->end_date));
+            $roomData['startRecur'] = $room->start_date_recurrent;
+            $roomData['endRecur'] = $room->end_date_recurrent;
+            $roomData['daysOfWeek'] = date('w', $startTime);
+            $roomData['startTime'] = date('H:i:s', $startTime);
+            $roomData['endTime'] = date('H:i:s', $endTime);
+        }
+        return $roomData;
     });
     return $transformedRooms;
   }
@@ -76,10 +89,11 @@ class RequestController extends Controller
     $transformedRooms = $rooms->map(function ($room) {
       return [
         'id' => $room->id,
-        'title' => $room->users->name . " " . $room->room->name,
+        'title' => " " . $room->users->name . " " . $room->room->name . " " . $room->reason,
         'start' =>  $this->converDates($room->date, $room->start_date),
+        'startTime' =>  $this->converDates($room->date, $room->start_date),
         'end' => $this->converDates($room->date, $room->end_date),
-        'startRecur' => $room->start_date_recurrent,
+        'endTime' => $this->converDates($room->date, $room->end_date),
         'endRecur' => $room->end_date_recurrent,
         'isRecur' => $room->is_recurring_event
       ];
@@ -95,9 +109,11 @@ class RequestController extends Controller
       $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $room->date . ' ' . $room->start_time);
       return [
         'id' => $room->id,
-        'title' => $room->users->name . " " . $room->room->name,
+        'title' => " " . $room->users->name . " " . $room->room->name . " " . $room->reason,
         'start' =>  $this->converDates($room->date, $room->start_date),
+        'startTime' =>  date('H:i:s', strtotime($this->converDates($room->date, $room->start_date))),
         'end' => $this->converDates($room->date, $room->end_date),
+        'endTime' => $this->converDates($room->date, $room->end_date),
         'startRecur' => $room->start_date_recurrent,
         'endRecur' => $room->end_date_recurrent,
         'isRecur' => $room->is_recurring_event
