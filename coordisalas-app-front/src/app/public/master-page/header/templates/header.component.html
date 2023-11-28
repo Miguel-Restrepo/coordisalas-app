@@ -24,7 +24,7 @@
         </div>
 
         <!-- Mensaje de bienvenida, icono de usuario y dropdown -->
-        <div class="flex items-center">
+        <div class="d-flex justify-content-center">
           <svg
             class="h-8 w-8 text-blue-500"
             viewBox="0 0 24 24"
@@ -101,41 +101,46 @@
             Inicio
           </button>
           <ng-container *ngIf="isAdmin">
-          <div class="border-l border-white h-6"></div>
-          <div  class="relative group flex-1" [routerLink]="'/usuarios'">
-            <button class="text-sm group-hover:bg-blue-700">Usuarios</button>
-          </div>
-        </ng-container>
-        <ng-container>
-          <div class="border-l border-white h-6"></div>
-          <div class="relative group flex-1" [routerLink]="'/salas'">
-            <button class="text-sm group-hover:bg-blue-700">Aulas</button>
-          </div>
-        </ng-container>
-        <ng-container>
-          <div class="border-l border-white h-6"></div>
-          <div class="relative group flex-1" [routerLink]="'/inicio'">
-            <button class="text-sm group-hover:bg-blue-700">Horarios</button>
-          </div>
-        </ng-container>
-        <ng-container *ngIf="isAdmin">
-          <div class="border-l border-white h-6"></div>
-          <div  class="relative group flex-1" [routerLink]="'/reservas'">
-            <button class="text-sm group-hover:bg-blue-700">Reservas</button>
-          </div>
-        </ng-container>
-        <ng-container *ngIf="isAdmin">
-          <div class="border-l border-white h-6"></div>
-            <div  class="relative group flex-1" [routerLink]="'/reports'">
+            <div class="border-l border-white h-6"></div>
+            <div class="relative group flex-1" [routerLink]="'/usuarios'">
+              <button class="text-sm group-hover:bg-blue-700">Usuarios</button>
+            </div>
+          </ng-container>
+          <ng-container>
+            <div class="border-l border-white h-6"></div>
+            <div class="relative group flex-1" [routerLink]="'/salas'">
+              <button class="text-sm group-hover:bg-blue-700">Aulas</button>
+            </div>
+          </ng-container>
+          <ng-container>
+            <div class="border-l border-white h-6"></div>
+            <div class="relative group flex-1" [routerLink]="'/inicio'">
+              <button class="text-sm group-hover:bg-blue-700">Horarios</button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="isAdmin">
+            <div class="border-l border-white h-6"></div>
+            <div class="relative group flex-1" [routerLink]="'/reservas'">
+              <button class="text-sm group-hover:bg-blue-700">Reservas</button>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="isAdmin">
+            <div class="border-l border-white h-6"></div>
+            <div class="relative group flex-1" [routerLink]="'/reports'">
               <button class="text-sm group-hover:bg-blue-700">Novedades</button>
             </div>
           </ng-container>
           <ng-container *ngIf="!isAdmin">
             <div class="border-l border-white h-6"></div>
-              <div  class="relative group flex-1">
-                <button class="text-sm group-hover:bg-blue-700" (click)="createReport()">Crear novedad</button>
-              </div>
-            </ng-container>
+            <div class="relative group flex-1">
+              <button
+                class="text-sm group-hover:bg-blue-700"
+                (click)="createReport()"
+              >
+                Crear novedad
+              </button>
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>

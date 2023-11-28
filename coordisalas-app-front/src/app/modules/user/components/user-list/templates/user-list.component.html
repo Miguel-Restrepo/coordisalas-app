@@ -1,6 +1,6 @@
-<div class="container mx-auto my-4 flex flex-col items-center">
+<div class="container mx-auto my-4 flex flex-col items-center w-fit">
   <h2 class="text-2xl dark:text-white">Lista de usuarios</h2>
-  <div class="flex mb-3 w-9/12 justify-between">
+  <div class="flex mb-3 w-full justify-between items-center">
     <button
       class="btn btn-success m-1 flex items-center text-white"
       (click)="create()"
@@ -45,7 +45,7 @@
       </div>
     </div>
   </div>
-  <table class="table table-bordered table-fixed w-9/12">
+  <table class="table table-bordered w-9/12">
     <thead>
       <tr>
         <th>Rol</th>
@@ -61,10 +61,12 @@
             | slice : (currentPage - 1) * pageSize : currentPage * pageSize
         "
       >
-      <td>{{ user.role }}</td>
-      <td>{{ user.document }}</td>
-        <td>{{ user.name }} {{ user.last_name }}</td>
-        <td class="flex items-center">
+        <td class="whitespace-nowrap p-4">{{ user.role }}</td>
+        <td class="whitespace-nowrap p-4">{{ user.document }}</td>
+        <td class="whitespace-nowrap p-4">
+          {{ user.name }} {{ user.last_name }}
+        </td>
+        <td class="d-flex justify-content-center">
           <button
             class="btn btn-warning m-1 flex items-center text-white"
             (click)="edit(user)"

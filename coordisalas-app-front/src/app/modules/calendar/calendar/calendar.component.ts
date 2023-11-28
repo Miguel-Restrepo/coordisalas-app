@@ -13,10 +13,14 @@ import { INITIAL_EVENTS, createEventId } from './event-utils';
 import esLocale from '@fullcalendar/core/locales/es';
 import { CalendarService } from 'src/app/services/Calendar/calendar.service';
 import { ServiceConfig } from 'src/app/config';
-import { SessionStorageService } from 'src/app/services';
+import {
+  RoomService,
+  SessionStorageService,
+  UserService,
+} from 'src/app/services';
 import { RequestService } from 'src/app/services';
-import { RequestRoom } from 'src/app/models';
-import { StateRequestEnum } from 'src/app/enums';
+import { RequestRoom, Room, User } from 'src/app/models';
+import { RolEnum, StateRequestEnum } from 'src/app/enums';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateRequestComponent } from '../create-request/create-request.component';
 import { DeleteRequestComponent } from '../delete-request/delete-request.component';
@@ -26,11 +30,12 @@ import { DeleteRequestComponent } from '../delete-request/delete-request.compone
   styleUrls: ['./calendar.component.css'],
 })
 export class CalendarComponent implements OnInit {
-  public userId: string = '';
-  selectedFilterType: string = 'room';
-  selectedRoom: string = 'Sala A';
+  private user: any;
+  private userId: string = '';
+  selectedFilterType: string = '';
+  selectedRoom: string = '';
   selectedUser: string = '';
-  calendarVisible = true;
+  calendarVisible = false;
   url: string = `${ServiceConfig.API_URL}request-room/approve/room/Sala_A`;
   calendarOptions: CalendarOptions = {
     locale: esLocale,
@@ -40,7 +45,8 @@ export class CalendarComponent implements OnInit {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
     },
-    initialView: 'dayGridMonth',
+    timeZone: 'America/New_York',
+    initialView: 'timeGridWeek',
     //initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
@@ -55,6 +61,8 @@ export class CalendarComponent implements OnInit {
       meridiem: 'short',
     },
     displayEventEnd: true,
+    stickyHeaderDates: true,
+    eventStartEditable: false,
     //allDaySlot: false,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
@@ -66,17 +74,21 @@ export class CalendarComponent implements OnInit {
     */
   };
   currentEvents: EventApi[] = [];
+  rooms: Room[] = [];
+  users: User[] = [];
 
   constructor(
     private changeDetector: ChangeDetectorRef,
     private sessionStorage: SessionStorageService,
     private modalService: NgbModal,
-    public requestRoomService: RequestService
+    public requestRoomService: RequestService,
+    public roomService: RoomService,
+    public userService: UserService
   ) {}
 
   getUserId() {
-    let user = this.sessionStorage.getItem('usuario');
-    this.userId = user.document;
+    this.user = this.sessionStorage.getItem('usuario');
+    this.userId = this.user.document;
   }
 
   handleCalendarToggle() {
@@ -96,7 +108,10 @@ export class CalendarComponent implements OnInit {
       end_date: selectInfo.end,
       room_id: this.selectedRoom,
       user_id: this.userId,
-      status: StateRequestEnum.Approved,
+      status:
+        this.user.role === RolEnum.Admin
+          ? StateRequestEnum.Approved
+          : StateRequestEnum.Pending,
     } as RequestRoom;
     this.create(model).then(() => {
       calendarApi.unselect();
@@ -117,6 +132,8 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     this.getUserId();
     this.loadEvents();
+    this.getRooms();
+    this.getUsers();
   }
 
   private loadEvents() {
@@ -137,8 +154,9 @@ export class CalendarComponent implements OnInit {
   }
 
   onSelectRoom(event: any) {
-    const selectedRoom = event.target.value;
-    this.filterByRoom(selectedRoom);
+    this.selectedRoom = event.target.value;
+    this.filterByRoom(this.selectedRoom);
+    this.calendarVisible = true;
   }
 
   filterByRoom(room: string) {
@@ -149,6 +167,7 @@ export class CalendarComponent implements OnInit {
   onSelectUser(event: any) {
     const selectedUser = event.target.value;
     this.filterByUser(selectedUser);
+    this.calendarVisible = true;
   }
 
   filterByUser(user: string) {
@@ -175,5 +194,27 @@ export class CalendarComponent implements OnInit {
       modalRef.componentInstance.title = title;
       modalRef.componentInstance.resolve = resolve;
     });
+  }
+
+  getRooms() {
+    this.roomService.getRooms().subscribe(
+      (data: Room[]) => {
+        this.rooms = data;
+      },
+      (error: any) => {
+        console.error('Error fetching rooms:', error);
+      }
+    );
+  }
+
+  getUsers() {
+    this.userService.getUsers().subscribe(
+      (data: User[]) => {
+        this.users = data;
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+      }
+    );
   }
 }

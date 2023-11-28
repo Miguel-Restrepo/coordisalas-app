@@ -1,4 +1,4 @@
-<div class="container mx-auto my-4 flex flex-col items-center w-auto">
+<div class="container mx-auto my-4 flex flex-col items-center w-fit w-fit">
   <h2 class="text-2xl dark:text-white">Lista de aulas</h2>
   <div class="flex mb-3 w-full justify-between items-center">
     <ng-container *ngIf="isAdmin">
@@ -47,7 +47,7 @@
       </div>
     </div>
   </div>
-  <table class="table table-bordered table-fixed">
+  <table class="table table-bordered">
     <thead>
       <tr>
         <th>Nombre</th>
@@ -68,10 +68,12 @@
             | slice : (currentPage - 1) * pageSize : currentPage * pageSize
         "
       >
-        <td>{{ room.name }}</td>
-        <td>{{ room.available_seats }}</td>
-        <td>{{ room.functional_computers }}/{{ room.total_computers }}</td>
-        <td>
+        <td class="whitespace-nowrap p-4">{{ room.name }}</td>
+        <td class="whitespace-nowrap p-4">{{ room.available_seats }}</td>
+        <td class="whitespace-nowrap p-4">
+          {{ room.functional_computers }}/{{ room.total_computers }}
+        </td>
+        <td class="whitespace-nowrap p-4">
           <div class="icon-container">
             <svg
               *ngIf="room.tv"
@@ -101,7 +103,7 @@
             </svg>
           </div>
         </td>
-        <td>
+        <td class="whitespace-nowrap p-4">
           <div class="icon-container">
             <svg
               *ngIf="room.videoBeam"
@@ -131,9 +133,9 @@
             </svg>
           </div>
         </td>
-        <td>{{ room.description }}</td>
+        <td class="whitespace-nowrap p-4">{{ room.description }}</td>
         <ng-container *ngIf="isAdmin">
-          <td class="flex items-center w-auto">
+          <td class="d-flex justify-content-center">
             <button
               class="btn btn-warning m-1 flex items-center text-white"
               (click)="edit(room)"
