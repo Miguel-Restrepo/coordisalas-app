@@ -1,6 +1,6 @@
-<div class="container mx-auto my-4 flex flex-col items-center">
+<div class="container mx-auto my-4 flex flex-col items-center w-fit">
   <h2 class="text-2xl dark:text-white">Lista de Solicitudes pendientes</h2>
-  <div class="flex mb-3 w-9/12 justify-between">
+  <div class="flex mb-3 w-full justify-between items-center">
     <div class="relative w-1/4">
       <div class="input-group">
         <span class="input-group-text">
@@ -27,7 +27,7 @@
       </div>
     </div>
   </div>
-  <table class="table table-bordered table-fixed w-9/12">
+  <table class="table table-bordered">
     <thead>
       <tr>
         <th>Sala</th>
@@ -36,7 +36,7 @@
         <th>Razon</th>
         <th>Fecha inicio</th>
         <th>Fecha fin</th>
-        <th>Acción</th>
+        <th class="w-fit">Acción</th>
       </tr>
     </thead>
     <tbody>
@@ -46,16 +46,22 @@
             | slice : (currentPage - 1) * pageSize : currentPage * pageSize
         "
       >
-        <td>{{ request.room?.name }}</td>
-        <td>{{ request.users?.name }} {{ request.users?.last_name }}</td>
-        <td>{{ request.start_date }}-{{ request.end_date }}</td>
-        <td>{{ request.reason }}</td>
-        <td>{{ request.start_date_recurrent }}</td>
-        <td>{{ request.end_date_recurrent }}</td>
-        
+        <td class="whitespace-nowrap p-4">{{ request.room?.name }}</td>
+        <td class="whitespace-nowrap p-4">
+          {{ request.users?.name }} {{ request.users?.last_name }}
+        </td>
+        <td class="whitespace-nowrap p-4">
+          {{ request.start_date }}-{{ request.end_date }}
+        </td>
+        <td class="whitespace-nowrap p-4">{{ request.reason }}</td>
+        <td class="whitespace-nowrap p-4">
+          {{ request.start_date_recurrent }}
+        </td>
+        <td class="whitespace-nowrap p-4">{{ request.end_date_recurrent }}</td>
+
         <td class="flex items-center">
           <button
-            class="btn btn-success m-1 flex items-center text-white"
+            class="btn btn-success m-1 d-flex align-items-center text-white"
             (click)="accept(request)"
           >
             <svg
@@ -66,12 +72,14 @@
               class="bi bi-check2-fill"
               viewBox="0 0 16 16"
             >
-            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+              <path
+                d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+              />
             </svg>
-            <span class="ml-2">Aceptar</span>
+            <span class="ml-1">Aceptar</span>
           </button>
           <button
-            class="btn btn-danger m-1 flex items-center text-white"
+            class="btn btn-danger m-1 d-flex align-items-center text-white"
             (click)="rejected(request)"
           >
             <svg
@@ -86,7 +94,7 @@
                 d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"
               />
             </svg>
-            <span class="ml-2">Rechazar</span>
+            <span class="ml-1">Rechazar</span>
           </button>
         </td>
       </tr>

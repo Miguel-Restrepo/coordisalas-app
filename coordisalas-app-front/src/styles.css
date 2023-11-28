@@ -3,15 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.fc .fc-toolbar.fc-header-toolbar {
-  margin-bottom: 1.5em;
-  position: sticky;
-  top: 25vh !important;
-  z-index: 10;
-  background: white;
-  padding: 0.25rem;
-}
-
 /* Default styles for larger screens */
 .fc-header-toolbar {
   display: flex;
@@ -54,4 +45,21 @@
   .fc-today-button {
     font-size: 12px;
   }
+}
+
+.fc .fc-button-primary,
+.fc .fc-button-primary:disabled {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active,
+.fc .fc-button-primary:hover {
+  background-color: #1e48a5;
+  border-color: #1e48a5;
+}
+
+.fc-event:hover .fc-event-main:hover {
+  cursor: pointer;
 }

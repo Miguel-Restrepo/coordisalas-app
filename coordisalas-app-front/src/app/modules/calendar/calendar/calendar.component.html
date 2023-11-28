@@ -1,41 +1,50 @@
-<div class="demo-app">
-  <div class="demo-app-sidebar">
-    <div class="demo-app-sidebar-section">
-      <label>
-        <input
-          type="checkbox"
-          [checked]="calendarOptions.weekends"
-          (change)="handleWeekendsToggle()"
-        />
-        Mostrar fines de semana
-      </label>
-      <label>
-        Filtro:
-        <select (change)="onSelectFilter($event)">
-          <option value="room">Aula</option>
-          <option value="user">Usuario</option>
-        </select>
-      </label>
+<div class="mx-4 mt-4">
+  <label for="select1" class="block">Selecciona Filtro:</label>
+  <select class="form-select mb-3" (change)="onSelectFilter($event)">
+    <option value="" disabled selected>Selecciona</option>
+    <option value="room">Aula</option>
+    <option value="user">Usuario</option>
+  </select>
 
-      <label *ngIf="selectedFilterType === 'room'">
-        Seleccionar Aula:
-        <select (change)="onSelectRoom($event)">
-          <option value="Sala_A">Sala A</option>
-          <option value="Sala_B">Sala B</option>
-        </select>
-      </label>
+  <label class="block" *ngIf="selectedFilterType === 'room'">
+    Selecciona Aula:
+    <select
+      class="form-select mb-3"
+      [disabled]="!selectedFilterType"
+      (change)="onSelectRoom($event)"
+    >
+      <option value="" disabled selected>Selecciona Aula</option>
+      <option *ngFor="let room of rooms" [value]="room.name">
+        {{ room.name }}
+      </option>
+    </select>
+  </label>
 
-      <label *ngIf="selectedFilterType === 'user'">
-        Seleccionar Usuario:
-        <select (change)="onSelectUser($event)">
-          <option value="admin">admin</option>
-          <option value="admin2">admin2</option>
-        </select>
-      </label>
-    </div>
+  <label class="block" *ngIf="selectedFilterType === 'user'">
+    Selecciona Usuario:
+    <select
+      class="form-select mb-3"
+      [disabled]="!selectedFilterType"
+      (change)="onSelectUser($event)"
+    >
+      <option value="" disabled selected>Selecciona Usuario</option>
+      <option *ngFor="let user of users" [value]="user.document">
+        {{ user.name + " " + user.document }}
+      </option>
+    </select>
+  </label>
+
+  <div class="mb-3">
+    <input
+      class="form-checkbox mr-2"
+      type="checkbox"
+      [checked]="calendarOptions.weekends"
+      (change)="handleWeekendsToggle()"
+    />
+    <label for="showCalendar">Mostrar fines de semana</label>
   </div>
 
-  <div class="demo-app-main">
+  <div id="calendar" class="mb-3">
     <full-calendar
       *ngIf="calendarVisible"
       [options]="calendarOptions"
@@ -44,7 +53,6 @@
       <ng-template #eventContent let-arg>
         <b>{{ arg.timeText }}</b>
         <i>{{ arg.event.title }}</i>
-        <i>{{ arg.event.user }}</i>
       </ng-template>
     </full-calendar>
   </div>

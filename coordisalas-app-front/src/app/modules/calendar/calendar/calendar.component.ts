@@ -13,21 +13,29 @@ import { INITIAL_EVENTS, createEventId } from './event-utils';
 import esLocale from '@fullcalendar/core/locales/es';
 import { CalendarService } from 'src/app/services/Calendar/calendar.service';
 import { ServiceConfig } from 'src/app/config';
-import { SessionStorageService } from 'src/app/services';
+import {
+  RoomService,
+  SessionStorageService,
+  UserService,
+} from 'src/app/services';
 import { RequestService } from 'src/app/services';
-import { RequestRoom } from 'src/app/models';
-import { StateRequestEnum } from 'src/app/enums';
+import { RequestRoom, Room, User } from 'src/app/models';
+import { RolEnum, StateRequestEnum } from 'src/app/enums';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateRequestComponent } from '../create-request/create-request.component';
+import { DeleteRequestComponent } from '../delete-request/delete-request.component';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
 })
 export class CalendarComponent implements OnInit {
-  public userId: string = '';
-  selectedFilterType: string = 'room';
-  selectedRoom: string = 'Sala A';
+  private user: any;
+  private userId: string = '';
+  selectedFilterType: string = '';
+  selectedRoom: string = '';
   selectedUser: string = '';
-  calendarVisible = true;
+  calendarVisible = false;
   url: string = `${ServiceConfig.API_URL}request-room/approve/room/Sala_A`;
   calendarOptions: CalendarOptions = {
     locale: esLocale,
@@ -37,12 +45,14 @@ export class CalendarComponent implements OnInit {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
     },
-    initialView: 'dayGridMonth',
+    timeZone: 'America/New_York',
+    initialView: 'timeGridWeek',
     //initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
     selectable: true,
     selectMirror: true,
+    unselectCancel: '.request-form',
     dayMaxEvents: true,
     slotLabelFormat: {
       hour: 'numeric',
@@ -50,62 +60,35 @@ export class CalendarComponent implements OnInit {
       hour12: true,
       meridiem: 'short',
     },
+    displayEventEnd: true,
+    stickyHeaderDates: true,
+    eventStartEditable: false,
+    //allDaySlot: false,
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this),
-    eventAdd: (x) =>
-      this.createRequestRoom(
-        this.userId,
-        this.selectedRoom,
-        x.event.start,
-        x.event.end,
-        StateRequestEnum.Approved
-      ),
     /* you can update a remote database when these fire:
+    eventsSet: this.handleEvents.bind(this),
     eventAdd:
     eventChange:
     eventRemove:
     */
   };
   currentEvents: EventApi[] = [];
+  rooms: Room[] = [];
+  users: User[] = [];
 
   constructor(
     private changeDetector: ChangeDetectorRef,
     private sessionStorage: SessionStorageService,
-    public requestRoomService: RequestService
+    private modalService: NgbModal,
+    public requestRoomService: RequestService,
+    public roomService: RoomService,
+    public userService: UserService
   ) {}
 
   getUserId() {
-    let user = this.sessionStorage.getItem('usuario');
-    this.userId = user.document;
-  }
-
-  createRequestRoom(
-    userId: string,
-    room: string,
-    startDate: Date | null,
-    endDate: Date | null,
-    status: StateRequestEnum
-  ) {
-    console.log('hola');
-
-    let model = {
-      date: startDate,
-      start_date: startDate,
-      end_date: endDate,
-      room_id: room,
-      user_id: userId,
-      status: status,
-    } as RequestRoom;
-    this.requestRoomService.createRequestRoom(model).subscribe(
-      (data) => {
-        this.requestRoomService.requestRoomSubject.next(true);
-      },
-      (error) => {
-        console.error('Error al crear', error);
-      }
-    );
-    this.loadEvents();
+    this.user = this.sessionStorage.getItem('usuario');
+    this.userId = this.user.document;
   }
 
   handleCalendarToggle() {
@@ -118,40 +101,39 @@ export class CalendarComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
     const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      });
-    }
+    let model = {
+      date: selectInfo.start,
+      start_date: selectInfo.start,
+      end_date: selectInfo.end,
+      room_id: this.selectedRoom,
+      user_id: this.userId,
+      status:
+        this.user.role === RolEnum.Admin
+          ? StateRequestEnum.Approved
+          : StateRequestEnum.Pending,
+    } as RequestRoom;
+    this.create(model).then(() => {
+      calendarApi.unselect();
+      calendarApi.refetchEvents();
+      //calendarApi.changeView(calendarApi.view.type);
+    });
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    if (
-      confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      )
-    ) {
-      clickInfo.event.remove();
-    }
-  }
-
-  handleEvents(events: EventApi[]) {
-    this.currentEvents = events;
-    this.changeDetector.detectChanges();
+    const calendarApi = clickInfo.view.calendar;
+    this.delete(clickInfo.event.id, clickInfo.event.title).then(() => {
+      calendarApi.unselect();
+      calendarApi.refetchEvents();
+      //calendarApi.changeView(calendarApi.view.type);
+    });
   }
 
   ngOnInit() {
     this.getUserId();
     this.loadEvents();
+    this.getRooms();
+    this.getUsers();
   }
 
   private loadEvents() {
@@ -172,8 +154,9 @@ export class CalendarComponent implements OnInit {
   }
 
   onSelectRoom(event: any) {
-    const selectedRoom = event.target.value;
-    this.filterByRoom(selectedRoom);
+    this.selectedRoom = event.target.value;
+    this.filterByRoom(this.selectedRoom);
+    this.calendarVisible = true;
   }
 
   filterByRoom(room: string) {
@@ -184,10 +167,54 @@ export class CalendarComponent implements OnInit {
   onSelectUser(event: any) {
     const selectedUser = event.target.value;
     this.filterByUser(selectedUser);
+    this.calendarVisible = true;
   }
 
   filterByUser(user: string) {
     this.url = `${ServiceConfig.API_URL}request-room/approve/user/${user}`;
     this.loadEvents();
+  }
+
+  create(requestRoom: RequestRoom): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const modalRef = this.modalService.open(CreateRequestComponent, {
+        size: 'lg',
+      });
+      modalRef.componentInstance.model = requestRoom;
+      modalRef.componentInstance.resolve = resolve;
+    });
+  }
+
+  delete(id: String, title: String): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const modalRef = this.modalService.open(DeleteRequestComponent, {
+        size: 'lg',
+      });
+      modalRef.componentInstance.id = id;
+      modalRef.componentInstance.title = title;
+      modalRef.componentInstance.resolve = resolve;
+    });
+  }
+
+  getRooms() {
+    this.roomService.getRooms().subscribe(
+      (data: Room[]) => {
+        this.rooms = data;
+      },
+      (error: any) => {
+        console.error('Error fetching rooms:', error);
+      }
+    );
+  }
+
+  getUsers() {
+    this.userService.getUsers().subscribe(
+      (data: User[]) => {
+        this.users = data;
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+      }
+    );
   }
 }

@@ -1,31 +1,64 @@
 <div class="modal-content">
   <div class="modal-header bg-primary text-white">
     <h5 class="modal-title">Perfil de Usuario</h5>
-    <button type="button" class="close" (click)="closedModal()" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      (click)="closedModal()"
+      aria-label="Close"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body d-flex flex-column align-items-center">
     <div class="text-center mb-4">
-      <img src="https://via.placeholder.com/150" alt="Profile Picture" class="rounded-circle img-thumbnail"
-        style="width: 150px; height: 150px;">
+      <img
+        src="https://via.placeholder.com/150"
+        alt="Profile Picture"
+        class="rounded-circle img-thumbnail"
+        style="width: 150px; height: 150px"
+      />
     </div>
     <div class="w-100">
-      <div class="form-group d-flex">
+      <div class="form-group d-flex my-2">
         <label for="document" class="w-25">Documento:</label>
-        <input type="text" id="document" class="form-control" value="{{ data.document }}" readonly>
+        <input
+          type="text"
+          id="document"
+          class="form-control"
+          value="{{ data.document }}"
+          readonly
+        />
       </div>
-      <div class="form-group d-flex">
+      <div class="form-group d-flex my-2">
         <label for="name" class="w-25">Nombre:</label>
-        <input type="text" id="name" class="form-control" value="{{ data.name }}" readonly>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          value="{{ data.name }}"
+          readonly
+        />
       </div>
-      <div class="form-group d-flex">
+      <div class="form-group d-flex my-2">
         <label for="last_name" class="w-25">Apellido:</label>
-        <input type="text" id="last_name" class="form-control" value="{{ data.last_name }}" readonly>
+        <input
+          type="text"
+          id="last_name"
+          class="form-control"
+          value="{{ data.last_name }}"
+          readonly
+        />
       </div>
-      <div class="form-group d-flex">
+      <div class="form-group d-flex my-2">
         <label for="role" class="w-25">Rol:</label>
-        <input type="text" id="role" class="form-control" value="{{ data.role }}" readonly>
+        <input
+          type="text"
+          id="role"
+          class="form-control"
+          value="{{ data.role }}"
+          readonly
+        />
       </div>
     </div>
   </div>

@@ -5,8 +5,6 @@ import { User } from './user.model';
 export class RequestRoom {
   id?: string;
   date?: Date;
-  startTime?: Date;
-  endTime?: Date;
   start_date?: Date;
   end_date?: Date;
   room_id?: string;
